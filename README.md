@@ -33,3 +33,7 @@ The existing `RTU-001–030` labels are **not replaced or renumbered**. `NSW-ELE
 **NSW-ELEC-005:** inspect all Repository Town buildings and non-building loads with stable references. **NSW-ELEC-026 (new P0):** separately validate public GIS pole-data licence/completeness *before* claiming geolocated service lines. Other immediate independent tasks: NSW-ELEC-006 import Essential Energy 30-minute datasets and NSW-ELEC-007 import AEMO five-minute data.
 
 **Evidence rules:** keep source URLs, version/dates, geography, units, and factual/inferred/synthetic labels. Public documents may be copyright-restricted; use links and original 3D assets rather than re-uploading diagrams without permission. Grid physics, game approximation, and electrical-safety engineering are distinct layers.
+
+## RTU-001 baseline audit completed
+
+[234-location electrical source/runtime audit](docs/RTU_001_ELECTRICAL_AUDIT.md), [building CSV](audit/electricity/buildings.csv), [machine-readable evidence](audit/electricity/coverage.json) and [validation log](audit/electricity/validation.txt). Runtime baseline `19a13fe`; tool/evidence candidate `930cfab` in JoshMemory PR #199. No utility feature deployed. This covers RTU-001; NSW-ELEC-005's broader per-light/pump/rail asset registry remains open rather than treating grouped loads as individually mapped assets. Preserve the independent research and NSW-ELEC-026 priority above.

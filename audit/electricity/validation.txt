@@ -1,0 +1,27 @@
+RTU-001 baseline 19a13fe; source/controlled Node and Three.js audit.
+$ node tools/audit-electricity.mjs --check
+{"task":"RTU-001","houses":188,"sites":46,"total":234,"householdModels":99,"unmodelledHouseLots":89,"graphEdges":10,"aggregateCustomers":7,"physicalBuildingServices":0,"civicInteriorsWithPowerCallbacks":38,"civicInteriorsWithoutPowerCallbacks":8,"probes":[{"id":"healthy-capacity","result":"pass"},{"id":"every-line-fault","result":"pass"},{"id":"household-request-suppression","result":"confirmed-gap"},{"id":"feeder-partition","result":"confirmed-gap"},{"id":"water-sewer-dependency","result":"pass"},{"id":"unknown-customer-fallback","result":"confirmed-gap"},{"id":"fault-save-restore","result":"pass"},{"id":"shop-coldroom-save-restore","result":"confirmed-gap"},{"id":"renderer-gating-source","result":"confirmed-gap"},{"id":"mill-circuit-mismatch","result":"confirmed-gap"}],"check":true}
+EXIT 0
+$ node tests/power-grid.mjs
+PASS: 10-edge capacity-limited power grid; feeder fault, dependencies, budgeted repair, event replay and v1/v2 save restoration
+EXIT 0
+$ node tests/household.mjs
+PASS: households (food storage, spoilage, 4-hour rule, rent and home loans, bills, budgets, chores) and shop counters (FIFO lines, prep times, waste, cold rooms).
+EXIT 0
+$ node tests/lighting.mjs
+PASS: all civic interiors lit; street light budget, falloff, clock, relocation, blackout and trading/overnight schedules
+EXIT 0
+$ node tests/directional-addresses.mjs
+Directional plot audit passed: 188 houses, 46 sites, 26 rail-corridor references, 572 planning slots.
+EXIT 0
+$ node tests/town-simulation.mjs
+PASS: town simulation — 99 villagers, utilities, bag and bank, council, elections (mayors Vern), 14 stable days (worst 250 meals), restore
+EXIT 0
+
+Build/privacy: node tools/build.mjs && node tools/check_privacy.mjs
+Restored bramblewick WebAssembly (41.7 MiB) from tracked gzip
+Built 188 houses (34 exterior styles) → dist/public, dist/private
+Scanned 774 files in dist/public for 1116 private markers.
+No private repository data found in the public build.
+EXIT 0
+Privacy of audit export: no inventory repository owner/slug strings in generated coverage.json. PASS
