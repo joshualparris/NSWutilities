@@ -114,25 +114,34 @@ def inspect(scada_zip, dispatch_zip, day, strict=True):
         source_summary["duids_seen"].add(duid)
         source_summary["duid_mwh"][duid] += mw / 12  # five-minute *approximate* MWh
         source_summary["scada_rows"] += 1
+    seen_price_times = set()
+    duplicate_prices = 0
     for _, table, row in read_zip_csv_records(dispatch_zip):
-        if table != "REGIONSUM" or row.get("REGIONID", "").strip().upper() != "NSW1":
+        if table not in ("REGIONSUM", "PRICE") or row.get("REGIONID", "").strip().upper() != "NSW1":
             continue
         instant = parse_nem_time(row["SETTLEMENTDATE"])
         if not (start < instant <= end):
             continue
-        if instant in seen_dispatch_times:
-            duplicates += 1
-            continue
-        seen_dispatch_times.add(instant)
-        source_summary["dispatch_region_rows"] += 1
-        records[instant] = {
-            "nsw_total_demand_mw": to_num(row.get("TOTALDEMAND"), "TOTALDEMAND"),
-            "nsw_spot_price_aud_per_mwh": to_num(row.get("RRP"), "RRP"),
-        }
+        if table == "REGIONSUM":
+            if instant in seen_dispatch_times:
+                duplicates += 1
+                continue
+            seen_dispatch_times.add(instant)
+            source_summary["dispatch_region_rows"] += 1
+            records.setdefault(instant, {})["nsw_total_demand_mw"] = to_num(
+                row.get("TOTALDEMAND"), "TOTALDEMAND")
+        else:
+            if instant in seen_price_times:
+                duplicate_prices += 1
+                continue
+            seen_price_times.add(instant)
+            records.setdefault(instant, {})["nsw_spot_price_aud_per_mwh"] = to_num(
+                row.get("RRP"), "RRP")
     # Dispatch settlement timestamps mark interval END. A trading day contains
     # 00:05 ... 23:55 and 00:00 the next calendar day (288 intervals).
     expected = [start + timedelta(minutes=5*i) for i in range(1, 289)]
-    missing_dispatch = [t.isoformat() for t in expected if t not in records]
+    missing_dispatch = [t.isoformat() for t in expected if t not in seen_dispatch_times]
+    missing_price = [t.isoformat() for t in expected if t not in seen_price_times]
     missing_scada = [t.isoformat() for t in expected if t not in scada]
     combined = []
     for t in sorted(set(records) | set(scada)):
@@ -153,6 +162,8 @@ def inspect(scada_zip, dispatch_zip, day, strict=True):
         "dispatch_nsw_intervals": len(records),
         "scada_nem_intervals": len(scada),
         "missing_nsw_intervals": missing_dispatch,
+        "missing_nsw_prices": missing_price,
+        "duplicate_nsw_prices": duplicate_prices,
         "missing_scada_intervals": missing_scada,
         "duplicate_nsw_intervals": duplicates,
         "duplicate_duid_intervals": source_summary["duplicate_duid_times"],
@@ -167,8 +178,8 @@ def inspect(scada_zip, dispatch_zip, day, strict=True):
         ]
     }
     if records:
-        demand = [r["nsw_total_demand_mw"] for r in records.values()]
-        price = [r["nsw_spot_price_aud_per_mwh"] for r in records.values()]
+        demand = [r["nsw_total_demand_mw"] for r in records.values() if "nsw_total_demand_mw" in r]
+        price = [r["nsw_spot_price_aud_per_mwh"] for r in records.values() if "nsw_spot_price_aud_per_mwh" in r]
         report["nsw_demand_mw_stats"] = {
             "min": round(min(demand), 3), "mean": round(statistics.mean(demand), 3),
             "max": round(max(demand), 3)
@@ -177,8 +188,9 @@ def inspect(scada_zip, dispatch_zip, day, strict=True):
             "min": round(min(price), 3), "mean": round(statistics.mean(price), 3),
             "max": round(max(price), 3)
         }
-    report["valid_complete_day"] = (not missing_dispatch and not missing_scada
-                                     and not duplicates and not source_summary["duplicate_duid_times"])
+    report["valid_complete_day"] = (not missing_dispatch and not missing_price
+                                     and not missing_scada and not duplicates
+                                     and not duplicate_prices and not source_summary["duplicate_duid_times"])
     if strict and not report["valid_complete_day"]:
         raise ValueError("invalid or incomplete day: " + json.dumps({
             k: (len(v) if isinstance(v, list) else v) for k,v in report.items()
