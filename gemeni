@@ -1,0 +1,91 @@
+Research Master Index
+ * Town Selection Matrix & Calibrated Example
+ * Primary-Source Evidence Registry
+ * NEM Mechanics & Grid Architecture (2026)
+ * Asset Inventory & Load Profiles
+ * Open-Source Code Audit
+ * Simulation Architecture & Data Schemas
+ * Implementation Roadmap (GitHub Tasks)
+ * Deep Research Prompt
+1. Town Selection Matrix
+| Town (Utility) | Public Data Availability | Grid Complexity & Microgrid Status | Selection Score |
+|---|---|---|---|
+| Bawley Point / Kioloa (Endeavour) | Very High (Community microgrid trials, detailed public rollout data) | 11kV radial feeder, dense rooftop PV, 3MWh grid-forming battery, islanding. | 9.5/10 (Selected) |
+| Broken Hill (Transgrid/Essential) | High (2024 blackout inquiry, AEMO reports, Transgrid 200MW battery) | 22kV local, 220kV transmission. Diesel backup conflicts with grid-forming BESS. | 8.5/10 |
+| Cobargo (Essential) | Medium (Bushfire recovery, partial microgrid feasibility studies) | SWER lines, vulnerability to bushfire, proposed community solar. | 7.0/10 |
+| Parkes (Essential) | High (REZ public planning documents) | Heavy industrial load, utility-scale solar integration, lack of town-level islanding. | 6.5/10 |
+Calibrated Town Example: Bawley Point & Kioloa
+Located at the fringe of the Endeavour Energy network, this coastal community is fed by a long, vulnerable 11kV distribution line from the Ulladulla zone substation. Due to a history of bushfire and storm outages, Endeavour Energy deployed a community microgrid featuring a 3MWh grid-forming battery. This makes it the perfect gameplay environment: it features explicit islanding mechanics, extreme weather vulnerability, renewable curtailment, and observable phase-balancing constraints.
+2. Primary-Source Evidence Registry
+ * AEMO 2026 Electricity Statement of Opportunities (ESOO): Validates the 10-year reliability outlook, detailing that winter is now a primary season for reliability pressure and highlighting the necessity of long-duration storage. Confirms 40 GW of committed/anticipated projects across the NEM.
+ * AEMO 2026 Integrated System Plan (ISP): Provides the least-cost roadmap for the NEM, documenting utility-scale generation limits and transmission paths.
+ * Endeavour Energy Distribution Annual Planning Report (DAPR): Source for zone substation load traces, thermal limits, and planned 11kV feeder upgrades.
+ * AS/NZS 4777.2:2020 (Grid connection of energy systems via inverters): Dictates anti-islanding protection and voltage/frequency ride-through behaviors for rooftop solar.
+ * OpenStreetMap (OSM) Power Infrastructure Data: Used for geographic coordinate mapping of physical poles and transformer cabinets without breaching critical infrastructure security.
+ * Uncertainty Register: Exact low-voltage (400V) phase assignments for individual dwellings are not publicly recorded; simulated phase balancing will require procedural generation.
+ * Safety/Privacy: Exact protection relay settings and SCADA IPs are omitted. Fictionalized IDs substitute for real smart meter NMIs (National Metering Identifiers).
+3. NEM Mechanics & Grid Architecture (2026)
+The National Electricity Market (NEM) operates on a 5-minute settlement interval managed by AEMO.
+ * Transmission (Transgrid): 330kV and 132kV bulk transport. AEMO dispatches utility-scale wind, solar, coal, and gas to balance demand. The 2026 ESOO models significant long-duration storage (8+ hours) required to meet winter reliability gaps.
+ * Distribution (Endeavour Energy): Drops 132kV to 33kV at regional substations, then to 11kV at the zone substation (Ulladulla). The 11kV feeder travels to Bawley Point.
+ * Local LV Grid: 11kV drops to 400V (three-phase) and 230V (single-phase) via pole-mounted or pad-mounted distribution transformers (typically 100kVA to 500kVA).
+ * Faults & Islanding: Under AS/NZS 4777.2, if the 11kV feeder from Ulladulla trips, all standard rooftop solar inverters instantly shut down (anti-islanding) to protect line workers. The 3MWh community grid-forming battery then executes a "black start" for the town, establishing the 50Hz frequency and 230V reference. Once the microgrid is stable, residential smart inverters detect the grid and reconnect, supplying local load.
+4. Asset Inventory & Load Profiles
+Network Assets (Bawley Point):
+ * Poles & Wires: ACSR (Aluminium Conductor Steel Reinforced) overhead spans, prone to vegetation strikes.
+ * Protection: Auto-reclosers at the feeder origin (clears transient faults like branch strikes). Sectionalizers isolate permanent faults. Drop-out fuses protect individual LV transformers.
+ * Generation & Storage:
+   * Rooftop PV: ~3kW to 10kW per household. Degradation modelled at 0.5% per annum.
+   * BESS (Battery Energy Storage System): 3MWh central capacity. Chemistry: LFP (Lithium Iron Phosphate). Round-trip efficiency: 88%.
+Load Profiles (15-minute resolution):
+ * Residential: High morning peak (water heating, cooking), low midday load (solar export), extreme evening peak (EV charging, heat pumps, air conditioning). Power factor ~0.95 lagging.
+ * Commercial (Shops/Caravan Parks): Steadier daytime load.
+ * Water Infrastructure: Water/wastewater pumps exhibit high inrush currents and present large inductive loads (power factor ~0.8) requiring capacitor banks on the 11kV line for voltage support.
+5. Open-Source Code Audit
+| Engine | License | Paradigm | Electrical Fidelity | Integration Suitability |
+|---|---|---|---|---|
+| OpenDSS | EPRI (Open) | Scientific | Very High (Unbalanced, phase-aware, multi-timestep) | Excellent backend for distribution simulation. C++/Python via API. |
+| GridLAB-D | BSD | Scientific | Very High (Agent-based, weather, physical models) | Powerful but complex state-machine integration. |
+| pandapower | BSD | Scientific | High (Balanced/Unbalanced power flow, PyPSA linked) | Best Python-based API for hybrid game development. |
+| OpenTTD / Micropolis | GPL | Game | Low (Topological, no Kirchhoff's laws) | Excellent UX/UI reference for grid overlays, poor physics. |
+Decision: Use pandapower wrapped in a Python microservice as the simulation backend, solving Kirchhoff's laws and line capacities every in-game "tick". Use a spatial engine (e.g., Godot) for the frontend game state, weather, and fault triggering.
+6. Architecture Specification & Data Schemas
+The simulation relies on a hybrid geographic graph. The frontend maintains spatial state (trees falling, cars crashing into poles). When an event alters the grid topology (e.g., a line break), the frontend pushes the updated graph to the pandapower backend, which runs a non-linear Newton-Raphson power flow calculation and returns voltages, line loadings, and blackout statuses.
+Data Schema: Node (Bus)
+{
+  "node_id": "bus_bawley_012",
+  "voltage_level_kv": 0.4,
+  "type": "load",
+  "coordinates": {"lat": -35.508, "lon": 150.395},
+  "phase_connection": ["A", "N"]
+}
+
+Data Schema: Edge (Line)
+{
+  "line_id": "line_11kv_045",
+  "from_node": "bus_ulladulla_out",
+  "to_node": "bus_bawley_in",
+  "length_km": 14.2,
+  "r_ohm_per_km": 0.33,
+  "x_ohm_per_km": 0.38,
+  "max_i_ka": 0.25,
+  "status": "closed",
+  "overhead": true
+}
+
+State Machine: Outage & Restoration
+ * Normal_Op: Node voltage 1.0 per unit (p.u.).
+ * Fault_Triggered: Physics engine detects tree strike. Line status -> open.
+ * Protection_Actuated: Downstream nodes drop to 0.0 p.u. Rooftop solar trips.
+ * Islanding_Mode: Central BESS detects 0V, switches to grid_forming.
+ * Restored_Island: BESS energizes downstream bus. Solar reconnects after 60-second observation window.
+7. Implementation Roadmap (GitHub Tasks)
+ * NSW-ELEC-001: GIS Ingestion. Script to pull OSM data for Bawley Point, extracting highway, building, and power=pole tags to generate base coordinates.
+ * NSW-ELEC-002: Topology Builder. Python script to instantiate the radial 11kV line and synthetic 400V low-voltage network in pandapower. Acceptance: Successful load-flow solve with no disconnected nodes.
+ * NSW-ELEC-003: Profile Generator. Assign synthetic load curves (residential, commercial) and generation curves (PV based on BOM weather data) to nodes.
+ * NSW-ELEC-004: Event Engine & Protection. Implement AS4777.2 inverter tripping logic and line switch state arrays. Acceptance: Simulate a fault on the 11kV line; downstream buses must drop to 0V and PV must disconnect.
+ * NSW-ELEC-005: Microgrid Controller. Implement the BESS grid-forming logic. Acceptance: Post-fault, BESS restores local 400V network without the main 11kV feeder.
+ * NSW-ELEC-006: Visual Overlays. Godot implementation of map rendering, color-coding lines by thermal loading (green < 50%, yellow < 90%, red > 100%), and rendering blackout boundaries.
+8. Deep Research Prompt
+To execute the data gathering for NSW-ELEC-001 and NSW-ELEC-002, use the following prompt in a targeted web-scraper or research agent:
+"Retrieve the exact operational parameters for the Endeavour Energy Bawley Point and Kioloa community microgrid. Locate primary sources, including Endeavour Energy public project reports, ARENA funding disclosures, and NSW government environmental planning overlays. Extract the exact capacity of the grid-forming battery, the historical peak load of the local 11kV feeder, the estimated total MW of installed rooftop solar in the catchment, and the operational voltage limits. Format the output as a JSON configuration file suitable for a pandapower simulation initialization."
