@@ -52,10 +52,10 @@ Meters retain units; pub kWh/litres must NOT be added to existing abstract town 
 |---|---|---|---|---|
 | RTPUB-001 | P1 | — | Source/layout audit, all 16 utility boundaries, evidence and uncertainty | Documented |
 | RTPUB-002 | P1 | 001 | Finite inventories, SI units, service dependencies, time integration, save/reload tests | Implemented; test evidence below |
-| RTPUB-003 | P1 | 002 | Toilet/basin/kitchen props, collision-clear routes, entrance preserved | Implemented; geometry tests; browser acceptance pending |
-| RTPUB-004 | P1 | 002 | Real paid hot orders and NPC dinners consume utilities and reject unavailable kitchen before debit | Implemented; broader acceptance pending |
-| RTPUB-005 | P2 | 002–003 | Individual layer toggles and building electric-light outage response | Implemented; browser acceptance pending |
-| RTPUB-006 | P1 | 002–005 | Local desktop/Android playtest, movement, fixture interaction, failures, restore, errors and screenshots | Pending |
+| RTPUB-003 | P1 | 002 | Toilet/basin/kitchen props, collision-clear routes, entrance preserved | Implemented; geometry and local desktop/emulated-phone browser acceptance passed |
+| RTPUB-004 | P1 | 002 | Real paid hot orders and NPC dinners consume utilities and reject unavailable kitchen before debit | Implemented; atomic paid-order refusal and consumption tested; full long-run acceptance remains separate |
+| RTPUB-005 | P2 | 002–003 | Individual layer toggles and building electric-light outage response | Implemented; local browser acceptance passed |
+| RTPUB-006 | P1 | 002–005 | Local desktop/Android playtest, movement, fixture interaction, failures, restore, errors and screenshots | Passed locally, including screenshots; physical handset not tested |
 | RTPUB-007 | P1 | 006 | Full release/privacy gates, reviewed merge, exact live fingerprint and hosted playtest | Pending |
 | RTPUB-008 | P2 | 007 | Physical town mains/service topology, phase demand, hydraulic sewer pressure, stormwater forcing, automatic patrons/fixtures, deliveries/collection, mobile, broadcasts, fire/HVAC, brands and calibration | Open; do not claim every utility complete |
 
@@ -64,3 +64,7 @@ Affected code: `src/world/pub-utilities.js`, `pub-interior.js`, `life.js`, `src/
 ## Verification record
 
 Node regression verifies stored flush without water supply, insufficient cistern rejection, refill and litre accounting, sewer isolation, finite LPG, waste production, three-hour UPS exhaustion, cold-room warming/recovery, upstream outage despite local power, geometry pathfinding from entrance to all new hotspots, exclusive overlay and TownLife save/restore. Existing 45-interior suite and public build/privacy scan passed during development. Final evidence and remaining failures must be appended before completion claims.
+
+Local Chromium desktop 1280×800 and emulated Android 390×844 passed all three fixture approaches, E interactions, button actions, water-overlay selection, breaker outage, UPS/upstream distinction, keyboard movement and zero page errors. Eight screenshots are under `audit/pub-utilities/`. Emulation is not a physical-phone test. Full release gate and hosted acceptance remain separate.
+
+Full `npm run build:release` passed: integration and simulation soak, geometry, public privacy scan (776 files, 1116 markers), game integrity (77 shells), and release verification (1141 files), local merged candidate b858dac. Added paid-order atomic refusal/success regression also passed afterwards. Browser evidence corresponds to this pilot source; historical screenshot footer can show the earlier checkpoint build SHA and is not a production fingerprint. Hosted deployment remains unverified.
