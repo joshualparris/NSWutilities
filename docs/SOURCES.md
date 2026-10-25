@@ -53,3 +53,12 @@
 - Case-study selection does not mean real breaker/transformer/control point coordinates are in this repo; no private asset inventories.
 - Keep **source version and retrieval date** for later reproducibility; 2026 web pages may describe equipment not present in 2024.
 - For exact equipment and compliance: **separate follow-up** with distributor connection guides, AS/NZS 3000, 4777.2 and 5033 as lawfully accessible, manufacturer variants, fuse/transformer ratings and operating envelope.
+
+## Supplementary spatial and engineering sources (added after initial register)
+
+31. **NSW Government spatial data portal**, public `Essential_Energy_Poles` FeatureServer: https://portal.data.nsw.gov.au/arcgis/rest/services/Hosted/Essential_Energy_Poles/FeatureServer and [pole feature fields](https://portal.data.nsw.gov.au/arcgis/rest/services/Hosted/Essential_Energy_Poles/FeatureServer/3). Metadata confirms a queryable point layer with feeder, locality, highest voltage, material, date and pole type fields; **reuse licence, completeness and Menindee coverage unverified**.
+32. **Essential Energy**, *Electricity Network Maps* service and Network Information Portal: https://www.essentialenergy.com.au/maps. Availability of network map requests, **not** an as-built approved circuit model.
+33. **Essential Energy**, *Distribution Annual Planning data portal*: https://dapr.essentialenergy.com.au/. Public feeder overlays and substations; data-usage disclaimer applies.
+34. **Essential Energy**, *Quick Reference Guide Working near Essential Energy assets*, 01 July 2024, p5 figure 2. Public original diagrams/photos of typical overhead poles, streetlights, padmount substations, pillars and underground lines. Visual PDF page checked. https://www.essentialenergy.com.au/-/media/Project/EssentialEnergy/Website/Files/Safety/Quick-Reference-Guide-Working-near-Essential-Energy-Assets.pdf?rev=a4c31af962e44b728a5857034e57a76c.
+35. **Essential Energy**, *Solar and other Small Generators* and *Battery Storage*: https://www.essentialenergy.com.au/at-home/micro-embedded-generation and https://www.essentialenergy.com.au/at-home/battery-storage. Official contemporary connection information, solar export restrictions, kW/kWh nameplate declarations.
+36. **NSW 2018 Service and Installation Rules**, **SUPERSEDED** archival PDF (never cite as current rule): https://www.energy.nsw.gov.au/sites/default/files/2022-08/2018_11_NSW_ServiceAndInstallationRulesOfNSW_unmarked.pdf. The superseded marking was visually verified.
