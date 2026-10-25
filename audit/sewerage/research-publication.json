@@ -1,0 +1,50 @@
+{
+  "scope": "Documentation/research and stable designations only; no sewer runtime implementation or deployment",
+  "status": "verified-published",
+  "systems": 16,
+  "sewerTasks": 28,
+  "sourceRegistryEntries": 18,
+  "followupManualsExplicitlyNotFullyReviewed": [
+    "SW-S12",
+    "SW-S18"
+  ],
+  "completedResearchTasks": [
+    "RTSW-001",
+    "RTSW-002"
+  ],
+  "nextImplementation": "RTSW-003; check concurrent inventory ownership first",
+  "preservedOpenParents": [
+    "RTU-022",
+    "RTU-023",
+    "RTU-024"
+  ],
+  "waterResearchOwner": "Manus, per user",
+  "electricityResearchOwner": "Dedicated ChatGPT electricity research session, per user",
+  "provisionalReferenceTown": "Narromine; labelled synthetic game routes, not surveyed street assets",
+  "centralPR": "https://github.com/joshualparris/JoshMemory/pull/200",
+  "centralMerge": "202de76b6804db89d23d0cd39b3cbe497042423b",
+  "testedCandidate": "c4fff9e55e32bd1a0c16aef81af99bf14407c542",
+  "nswResearchPublication": "2d2903fff5af70ff4bf98d8e4d7f2f03f9e7ebb7",
+  "validation": {
+    "json": "16/28/18 unique IDs, acyclic dependencies, owner/status preservation PASS",
+    "local": [
+      "existing wastewater-interior regression PASS",
+      "existing power-grid regression PASS",
+      "public build PASS",
+      "privacy 774 files and 1116 markers PASS"
+    ],
+    "ci": [
+      {
+        "url": "https://github.com/joshualparris/JoshMemory/actions/runs/40153878141",
+        "result": "success",
+        "scope": "Town safety gate and five 28-day economic seeds"
+      },
+      {
+        "url": "https://github.com/joshualparris/JoshMemory/actions/runs/40153878125",
+        "result": "success",
+        "scope": "Existing game desktop/Android-sized recorded WebGL; not acceptance for unimplemented sewer features"
+      }
+    ]
+  },
+  "verification": "Central main and NSWutilities main register/research/tasks read back byte-for-byte"
+}
