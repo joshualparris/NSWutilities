@@ -25,6 +25,13 @@ These water tasks are **proposals, not completed implementations or assigned RTU
 
 The [source archive](imports/NSWutilities-water-2026-10-25.tar.bz2) is kept for reproducibility. All three Markdown files were extracted from the user-supplied bundle without modification; their Git blob hashes match the uploaded originals.
 
+## Verification closure: NSW-ELEC-002–004 (25 Oct 2026)
+
+- [NSW-ELEC-002 town selection: eight NSW candidates and primary-source decision matrix](docs/NSW_ELEC_002_TOWN_SELECTION.md) — Menindee selected as small-town reference; Kioloa/Bawley microgrid second reference, while Broken Hill itself is a regional centre.
+- [NSW-ELEC-003 official regional voltages, actual Menindee 66/22 kV substation, outages and **unknown** last-mile circuits](docs/NSW_ELEC_003_VERIFIED_TOPOLOGY.md) with [20 regional asset nodes / 13 schematic source-labelled links](data/menindee_regional_reference_2025.json).
+- [NSW-ELEC-004 six-game/engine source and licensing audit](docs/NSW_ELEC_004_SOLVER_CODE_AND_LICENSE.md), plus [executable pandapower/PyPSA physics comparison](tools/solver_benchmarks/compare_ac.py) and [CI reference suite](.github/workflows/nsw-elec-004.yml).
+- **Boundaries:** exact Menindee individual service drops, poles, phases and transformer ratings are NOT publicly verified and must be labelled synthetic. Benchmark results are from a wholly synthetic 11 kV toy feeder, never the actual Menindee circuit. No Repository Town game deployment is claimed.
+
 ## Best small-town reference found so far
 
 **Menindee, NSW**, within the unusually documented **Broken Hill / Far West** electrical supply area. Real publicly described regional transmission/feeder connections, AGL 50 MW/50 MWh battery, 53 MW solar plant, 200 MW wind farm, backup turbines and 2024 outage restoration chronology combine with Essential Energy zone datasets. **Bawley Point/Kioloa** is an important second case for islandable community solar/battery microgrids.
