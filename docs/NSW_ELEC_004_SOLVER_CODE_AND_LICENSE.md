@@ -35,7 +35,7 @@ The new [reference script](../tools/solver_benchmarks/compare_ac.py) builds *one
 - Consumer load **0.20 MW**, **0.06 MVAr**.
 - Run pandapower NR AC solution and PyPSA AC power flow. Check voltage magnitude and line losses are finite, stable and within tolerances **ΔV < 0.01 pu** and **ΔP_loss < 0.002 MW**.
 - Both use physically defined line impedance; this is **not** a Menindee real feeder and should never be presented as live operating data.
-- GitHub Actions [workflow](../.github/workflows/nsw-elec-004.yml) installs the engines, tests schema provenance and produces `data/solver_benchmarks/002bus_11kv_result.json` as an artifact. Package versions are recorded in the result. **Real CI execution status must be checked before declaring the benchmark passed**.
+- GitHub Actions [workflow](../.github/workflows/nsw-elec-004.yml) installs the engines, tests schema provenance and produces `data/solver_benchmarks/002bus_11kv_result.json` as an artifact. Package versions are recorded in the result. **Verified PASS in [GitHub Actions run 40154583465](https://github.com/joshualparris/NSWutilities/actions/runs/40154583465), using pandapower 3.5.6 and PyPSA 1.2.4.** Both independent solver results are recorded in [source-controlled CI evidence](../data/solver_benchmarks/002bus_11kv_result.json). Load-bus voltage: 0.99943108094 pu (both); resistive line losses: approx 0.0001154371 MW (both), with differences smaller than 1.2 × 10^-14 pu and 5.4 × 10^-15 MW.
 
 ## Decision and remaining tests
 
@@ -44,7 +44,7 @@ The new [reference script](../tools/solver_benchmarks/compare_ac.py) builds *one
 - [x] Inspect three real game source files and identify feature/physics limits.
 - [x] Inspect source of **three** engineering solvers and their actual root licences, with SHA and concrete file paths.
 - [x] Supply an executable benchmark harness and GitHub CI configuration.
-- [ ] **CI must actually pass** for the two-solver benchmark; verify run/artifact rather than assume.
+- [x] **Actual CI benchmark PASSED**: verified runner stdout and committed exact numeric output; see [run 40154583465](https://github.com/joshualparris/NSWutilities/actions/runs/40154583465).
 - [ ] Compile/run GridLAB-D unbalanced reference case and/or review licence scope of optional modules **before any direct engine integration**.
 - [ ] Compare runtime Repository Town AC approximation against engineering truth with tolerance dataset (NSW-ELEC-021); not part of this source-audit completion claim.
 
