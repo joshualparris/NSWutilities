@@ -19,7 +19,7 @@ jobs:
           from urllib.request import Request, urlopen
           from tempfile import NamedTemporaryFile
           from zipfile import ZipFile
-          from io import TextIOWrapper
+          from io import TextIOWrapper, BytesIO
           import os,shutil
           urls={
             'DISPATCH_SCADA': 'https://nemweb.com.au/Reports/ARCHIVE/Dispatch_SCADA/PUBLIC_DISPATCHSCADA_20261020.zip',
@@ -36,11 +36,20 @@ jobs:
                 with ZipFile(path) as z:
                   print(key,'FILES',[(x.filename,x.file_size) for x in z.infolist()][:6])
                   names=[x for x in z.namelist() if x.lower().endswith('.csv')]
-                  if names:
+                  if not names:
+                    inner=[x for x in z.namelist() if x.lower().endswith('.zip')]
+                    if inner:
+                      with ZipFile(BytesIO(z.read(inner[0]))) as nested:
+                        print(key,'NESTED_FILES',nested.namelist())
+                        names=[x for x in nested.namelist() if x.lower().endswith('.csv')]
+                        if names:
+                          with nested.open(names[0]) as raw:
+                            stream=TextIOWrapper(raw,encoding='utf-8-sig',errors='replace')
+                            for i in range(12): print(key,'HEAD',i,repr(next(stream).strip()[:240]))
+                  else:
                     with z.open(names[0]) as raw:
                       stream=TextIOWrapper(raw,encoding='utf-8-sig',errors='replace')
-                      for i in range(8):
-                        print(key,'HEAD',i,repr(next(stream).strip()[:220]))
+                      for i in range(12): print(key,'HEAD',i,repr(next(stream).strip()[:240]))
               finally:
                 os.unlink(path)
             except Exception as e:
