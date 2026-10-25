@@ -113,7 +113,7 @@ Acceptance scenario: sever a documented *synthetic model edge*; only downstream 
 
 ## 8. Uncertainty / limitations to resolve
 
-- No published street-level Menindee pole/transformer-to-customer register verified; generate synthetic alignments from town street positions and real rural construction conventions.
+- **Update:** a publicly hosted Essential Energy pole-point GIS service now exists, but Menindee coverage, timestamps, licence and suitability are still **unverified**. No complete Menindee pole-to-transformer-to-customer connectivity register has been validated. Use source-backed pole placements only after NSW-ELEC-026; generate explicitly synthetic missing cable/service alignments.
 - Regional diagram is a schematic; exact asset GIS geometry, switch configuration and phase connectivity *not* established.
 - DAPR nameplate MVA figures are not turbine electrical MW at incident temperatures/fuel limitations.
 - Regulatory consent for 50/100 MWh BESS is *not* proof that 100 MWh was installed; verified operating 50/50 is stronger evidence.
@@ -122,4 +122,4 @@ Acceptance scenario: sever a documented *synthetic model edge*; only downstream 
 - This first pass has **not** imported the half-hourly Essential Energy datasets or calibrated load against them.
 - No real-world security-sensitive substation control information is needed for the playable design.
 
-See [SOURCES.md](./SOURCES.md), [OPEN_SOURCE_SIMULATION_AUDIT.md](./OPEN_SOURCE_SIMULATION_AUDIT.md), and [TASKS.md](./TASKS.md).
+See [GIS_ASSET_EVIDENCE.md](./GIS_ASSET_EVIDENCE.md) for the public spatial-data discovery, as well as [SOURCES.md](./SOURCES.md), [OPEN_SOURCE_SIMULATION_AUDIT.md](./OPEN_SOURCE_SIMULATION_AUDIT.md), and [TASKS.md](./TASKS.md).
