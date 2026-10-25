@@ -1,0 +1,39 @@
+{
+  "task": "NSW-ELEC-004",
+  "status": "passed",
+  "source": "self-contained synthetic 2-bus single-line AC loadflow; NOT real NSW geometry",
+  "parameter": {
+    "kv": 11,
+    "line_km": 1,
+    "line_r_ohm_per_km": 0.32,
+    "line_x_ohm_per_km": 0.08,
+    "load_mw": 0.2,
+    "load_mvar": 0.06
+  },
+  "engines": {
+    "pandapower": "3.5.6",
+    "pypsa": "1.2.4"
+  },
+  "python_version": "3.12.3",
+  "results": {
+    "pandapower": {
+      "load_voltage_pu": 0.9994310809399959,
+      "line_losses_mw": 0.00011543709644137867
+    },
+    "pypsa": {
+      "load_voltage_pu": 0.9994310809399841,
+      "line_losses_mw": 0.0001154370964467355
+    }
+  },
+  "absolute_vm_pu_delta": 1.176836406102666e-14,
+  "absolute_line_loss_mw_delta": 5.35682609381638e-15,
+  "acceptance": {
+    "vm_pu_delta_lt": 0.01,
+    "loss_mw_delta_lt": 0.002
+  },
+  "verification": {
+    "run_url": "https://github.com/joshualparris/NSWutilities/actions/runs/40154583465",
+    "job_id": 121053124469,
+    "method": "Read back runner stdout, compared exact numeric rows, independent cross-solver CI"
+  }
+}

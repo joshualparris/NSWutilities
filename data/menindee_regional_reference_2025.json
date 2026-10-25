@@ -1,0 +1,365 @@
+{
+  "schema_version": 1,
+  "as_of": "2026-10-25",
+  "scope": "Regional public-document topology, not as-built/switching/service network",
+  "sources": [
+    {
+      "id": "DAPR-2025-P52",
+      "url": "https://www.essentialenergy.com.au/-/media/Project/EssentialEnergy/Website/Files/Our-Network/DAPR-Essential-Energy-2025.pdf?rev=929391b9ac8a4885b9fdca4e5a998b81",
+      "page": 52,
+      "published": "2025-12-22"
+    },
+    {
+      "id": "DAPR-2025-P53",
+      "url": "https://www.essentialenergy.com.au/-/media/Project/EssentialEnergy/Website/Files/Our-Network/DAPR-Essential-Energy-2025.pdf?rev=929391b9ac8a4885b9fdca4e5a998b81",
+      "page": 53,
+      "published": "2025-12-22"
+    },
+    {
+      "id": "ARENA-BHBESS-2024-P7",
+      "url": "https://arena.gov.au/assets/2024/11/AGL-AGL-Broken-Hill-Grid-Forming-Battery-Lessons-Learnt-Report-2.pdf",
+      "page": 7,
+      "published": "2024-11"
+    },
+    {
+      "id": "ESS-AR-2024-25",
+      "url": "https://www.essentialenergy.com.au/ext/ar2025/cover/operations-and-performance/our-operations/",
+      "page": null,
+      "published": "2025"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "REG-BURONGA",
+      "kind": "transmission_origin",
+      "name": "Buronga connection",
+      "voltage_kv": [
+        220
+      ],
+      "evidence": "DAPR-2025-P53",
+      "confidence": "documented_regional"
+    },
+    {
+      "id": "REG-X2",
+      "kind": "transmission_line",
+      "name": "Transgrid Buronga–Broken Hill X2 220 kV",
+      "voltage_kv": [
+        220
+      ],
+      "evidence": "DAPR-2025-P53",
+      "confidence": "documented_regional"
+    },
+    {
+      "id": "REG-BHL-BSP",
+      "kind": "bulk_supply_point",
+      "name": "Broken Hill Transgrid 220/22 kV",
+      "voltage_kv": [
+        220,
+        22
+      ],
+      "evidence": "DAPR-2025-P52",
+      "confidence": "documented_regional"
+    },
+    {
+      "id": "REG-BHL-66",
+      "kind": "voltage_conversion",
+      "name": "Essential Energy 22 to 66 kV supply conversion",
+      "voltage_kv": [
+        22,
+        66
+      ],
+      "evidence": "DAPR-2025-P52",
+      "confidence": "documented_regional"
+    },
+    {
+      "id": "REG-5B1-PPL",
+      "kind": "line_segment",
+      "name": "66 kV route 5B1:PPL toward Pinnacles Place and Mt Gipps",
+      "voltage_kv": [
+        66
+      ],
+      "evidence": "DAPR-2025-P53",
+      "confidence": "diagram_interpreted"
+    },
+    {
+      "id": "REG-PINNACLES",
+      "kind": "zone_substation",
+      "name": "Pinnacles Place 66/22 kV",
+      "voltage_kv": [
+        66,
+        22
+      ],
+      "evidence": "DAPR-2025-P53",
+      "confidence": "diagram_interpreted"
+    },
+    {
+      "id": "REG-MTG",
+      "kind": "zone_substation",
+      "name": "Mt Gipps multi-voltage zone substation",
+      "voltage_kv": [
+        66,
+        33,
+        22,
+        19.1,
+        6.6
+      ],
+      "evidence": "DAPR-2025-P53",
+      "confidence": "diagram_interpreted"
+    },
+    {
+      "id": "REG-5B1-MTG",
+      "kind": "line_segment",
+      "name": "66 kV 5B1:MTG connection",
+      "voltage_kv": [
+        66
+      ],
+      "evidence": "DAPR-2025-P53",
+      "confidence": "documented_regional"
+    },
+    {
+      "id": "REG-SUNSET",
+      "kind": "zone_substation",
+      "name": "Sunset Strip 66/33/22 kV zone substation",
+      "voltage_kv": [
+        66,
+        33,
+        22
+      ],
+      "evidence": "DAPR-2025-P53",
+      "confidence": "diagram_interpreted"
+    },
+    {
+      "id": "REG-5B1-SUN",
+      "kind": "line_segment",
+      "name": "66 kV 5B1:SUN route Sunset Strip to Menindee",
+      "voltage_kv": [
+        66
+      ],
+      "evidence": "DAPR-2025-P53",
+      "confidence": "documented_regional"
+    },
+    {
+      "id": "REG-MENINDEE",
+      "kind": "zone_substation",
+      "name": "Menindee 66/22 kV zone substation",
+      "voltage_kv": [
+        66,
+        22
+      ],
+      "evidence": "DAPR-2025-P53",
+      "confidence": "diagram_interpreted"
+    },
+    {
+      "id": "REG-MEN-PUMP",
+      "kind": "zone_substation",
+      "name": "Menindee Boost Pump electrical supply (separate labelled site)",
+      "voltage_kv": [
+        66,
+        3.3
+      ],
+      "evidence": "DAPR-2025-P53",
+      "confidence": "diagram_interpreted"
+    },
+    {
+      "id": "REG-SUN4B1",
+      "kind": "feeder",
+      "name": "Sunset Strip 33 kV SUN4B1 towards Wilcannia",
+      "voltage_kv": [
+        33
+      ],
+      "evidence": "DAPR-2025-P53",
+      "confidence": "documented_regional"
+    },
+    {
+      "id": "REG-SUN4B2",
+      "kind": "feeder",
+      "name": "Sunset Strip 33 kV SUN4B2 towards Lake Tandou",
+      "voltage_kv": [
+        33
+      ],
+      "evidence": "DAPR-2025-P53",
+      "confidence": "documented_regional"
+    },
+    {
+      "id": "REG-BHL-SOLAR",
+      "kind": "generator",
+      "name": "Broken Hill solar plant 53MW connected at 22kV",
+      "voltage_kv": [
+        22
+      ],
+      "rated_mw": 53,
+      "evidence": "DAPR-2025-P52",
+      "confidence": "documented_regional"
+    },
+    {
+      "id": "REG-SILVERTON",
+      "kind": "generator",
+      "name": "Silverton wind farm 200MW",
+      "voltage_kv": [],
+      "rated_mw": 200,
+      "evidence": "DAPR-2025-P53",
+      "confidence": "documented_regional"
+    },
+    {
+      "id": "REG-BHL-GT-A",
+      "kind": "backup_generator",
+      "name": "Broken Hill backup gas turbine A (25 MVA)",
+      "voltage_kv": [
+        22
+      ],
+      "rated_mva": 25,
+      "evidence": "DAPR-2025-P53",
+      "confidence": "documented_regional"
+    },
+    {
+      "id": "REG-BHL-GT-B",
+      "kind": "backup_generator",
+      "name": "Broken Hill backup gas turbine B (25 MVA)",
+      "voltage_kv": [
+        22
+      ],
+      "rated_mva": 25,
+      "evidence": "DAPR-2025-P53",
+      "confidence": "documented_regional"
+    },
+    {
+      "id": "REG-BHL-BESS",
+      "kind": "battery_energy_storage",
+      "name": "Broken Hill BESS commercial configuration",
+      "voltage_kv": [
+        22
+      ],
+      "rated_mw": 50,
+      "energy_mwh": 50,
+      "evidence": "ARENA-BHBESS-2024-P7",
+      "confidence": "documented_regional"
+    },
+    {
+      "id": "REG-PPL-GEN",
+      "kind": "emergency_temporary_generation",
+      "name": "Pinnacles Place dedicated temporary emergency generation (3.5 MVA)",
+      "voltage_kv": [],
+      "rated_mva": 3.5,
+      "evidence": "ESS-AR-2024-25",
+      "confidence": "documented_historical"
+    }
+  ],
+  "edges": [
+    {
+      "id": "E-X2",
+      "from": "REG-BURONGA",
+      "to": "REG-BHL-BSP",
+      "via": "REG-X2",
+      "nominal_kv": 220,
+      "evidence": "DAPR-2025-P53",
+      "confidence": "schematic_connection"
+    },
+    {
+      "id": "E-22-66",
+      "from": "REG-BHL-BSP",
+      "to": "REG-BHL-66",
+      "nominal_kv": 22,
+      "evidence": "DAPR-2025-P52",
+      "confidence": "schematic_connection"
+    },
+    {
+      "id": "E-5B1PPL",
+      "from": "REG-BHL-66",
+      "to": "REG-PINNACLES",
+      "via": "REG-5B1-PPL",
+      "nominal_kv": 66,
+      "evidence": "DAPR-2025-P53",
+      "confidence": "schematic_connection"
+    },
+    {
+      "id": "E-5B1MTG",
+      "from": "REG-PINNACLES",
+      "to": "REG-MTG",
+      "via": "REG-5B1-MTG",
+      "nominal_kv": 66,
+      "evidence": "DAPR-2025-P53",
+      "confidence": "schematic_connection"
+    },
+    {
+      "id": "E-5B1SUN",
+      "from": "REG-MTG",
+      "to": "REG-SUNSET",
+      "via": "REG-5B1-MTG",
+      "nominal_kv": 66,
+      "evidence": "DAPR-2025-P53",
+      "confidence": "schematic_connection"
+    },
+    {
+      "id": "E-MENINDEE",
+      "from": "REG-SUNSET",
+      "to": "REG-MENINDEE",
+      "via": "REG-5B1-SUN",
+      "nominal_kv": 66,
+      "evidence": "DAPR-2025-P53",
+      "confidence": "schematic_connection"
+    },
+    {
+      "id": "E-PUMP",
+      "from": "REG-MTG",
+      "to": "REG-MEN-PUMP",
+      "nominal_kv": 66,
+      "evidence": "DAPR-2025-P53",
+      "confidence": "schematic_connection"
+    },
+    {
+      "id": "E-SUN4B1",
+      "from": "REG-SUNSET",
+      "to": "REG-SUN4B1",
+      "nominal_kv": 33,
+      "evidence": "DAPR-2025-P53",
+      "confidence": "schematic_connection"
+    },
+    {
+      "id": "E-SUN4B2",
+      "from": "REG-SUNSET",
+      "to": "REG-SUN4B2",
+      "nominal_kv": 33,
+      "evidence": "DAPR-2025-P53",
+      "confidence": "schematic_connection"
+    },
+    {
+      "id": "E-SOLAR-BHL",
+      "from": "REG-BHL-SOLAR",
+      "to": "REG-BHL-BSP",
+      "nominal_kv": 22,
+      "evidence": "DAPR-2025-P52",
+      "confidence": "schematic_connection"
+    },
+    {
+      "id": "E-BESS-BHL",
+      "from": "REG-BHL-BESS",
+      "to": "REG-BHL-BSP",
+      "nominal_kv": 22,
+      "evidence": "ARENA-BHBESS-2024-P7",
+      "confidence": "schematic_connection"
+    },
+    {
+      "id": "E-GT1",
+      "from": "REG-BHL-GT-A",
+      "to": "REG-BHL-BSP",
+      "nominal_kv": 22,
+      "evidence": "DAPR-2025-P53",
+      "confidence": "schematic_connection"
+    },
+    {
+      "id": "E-GT2",
+      "from": "REG-BHL-GT-B",
+      "to": "REG-BHL-BSP",
+      "nominal_kv": 22,
+      "evidence": "DAPR-2025-P53",
+      "confidence": "schematic_connection"
+    }
+  ],
+  "model_rules": [
+    "No edge implies a physical street or actual switching topology",
+    "No town-level household or phase attribution",
+    "No interconnection between all regional generators and Menindee is guaranteed during main-grid outage",
+    "Every diagram-derived link carries schematic_connection confidence",
+    "Do not use this register for physical switching or maintenance"
+  ]
+}

@@ -1,0 +1,47 @@
+name: NSW-ELEC-004 cross-solver reference
+on:
+  push:
+    branches: [research/close-elec-002-004-evidence, main]
+    paths:
+      - .github/workflows/nsw-elec-004.yml
+      - tools/solver_benchmarks/**
+      - data/menindee_regional_reference_2025.json
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install engines with recorded versions
+        run: |
+          python -m pip install --quiet 'pandapower>=3,<4' 'pypsa>=1,<2'
+          python -m pip freeze | grep -Ei '^(pandapower|pypsa|numpy|scipy|pandas)='
+      - name: Validate provenance-labelled network evidence
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json
+          v=json.loads(Path('data/menindee_regional_reference_2025.json').read_text())
+          nodes={n['id']:n for n in v['nodes']}
+          evidence={s['id'] for s in v['sources']}
+          assert len(nodes)==len(v['nodes'])
+          assert len(v['nodes'])>=15 and len(v['edges'])>=10
+          assert all(n['evidence'] in evidence for n in nodes.values())
+          assert all(e['evidence'] in evidence for e in v['edges'])
+          assert all(e['from'] in nodes and e['to'] in nodes for e in v['edges'])
+          assert all(not e.get('nominal_kv') or e['nominal_kv']>0 for e in v['edges'])
+          men=nodes['REG-MENINDEE']
+          assert men['voltage_kv']==[66,22]
+          print('VALIDATED',len(nodes),'regional schematic assets,',len(v['edges']),'diagram-derived edges; synthetic last mile is not claimed')
+          PY
+      - name: Run genuine AC loadflow with two independent engines
+        run: python tools/solver_benchmarks/compare_ac.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: NSW-ELEC-004-cross-engine-11kV
+          path: data/solver_benchmarks/002bus_11kv_result.json
+          retention-days: 90
