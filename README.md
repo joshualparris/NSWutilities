@@ -8,7 +8,7 @@
 | Sewerage and sanitary plumbing | **Narromine, NSW** |
 | Water supply | **Orange, NSW** |
 
-Gas/LPG; internet/telephone/radio/mobile; waste/recycling/bin collection; and fuel supply still need reference-town selection. These are separate service-specific cases, not one merged real-town network. See the [reference-town register](docs/REFERENCE_TOWNS.md) and [new Manus water comparison](docs/TOWN_DATA_COMPARISON_2026-10-25.md). [Original Manus PDF](imports/manus/2026-10-25/Repository_Town_selection__comparative_public_wate.pdf) and [import checksums](imports/manus/2026-10-25/manifest.json) are preserved alongside the original ZIP and Markdown attachments.
+Additional user-selected references: **Forbes—gas; Tamworth—fixed internet/telephone; Orange—radio/TV; Wagga Wagga—mobile**. Orange waste and Dubbo fuel remain provisional comparators. These are separate service-specific cases, not one merged real-town network. See the [reference-town register](docs/REFERENCE_TOWNS.md) and [new Manus water comparison](docs/TOWN_DATA_COMPARISON_2026-10-25.md). [Original Manus PDF](imports/manus/2026-10-25/Repository_Town_selection__comparative_public_wate.pdf) and [import checksums](imports/manus/2026-10-25/manifest.json) are preserved alongside the original ZIP and Markdown attachments.
 
 **As at 25 October 2026 | Public NSW data, real grid examples, open-source game-code audit and a playable Repository Town roadmap.**
 
