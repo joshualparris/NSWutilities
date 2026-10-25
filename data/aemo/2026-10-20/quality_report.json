@@ -5,7 +5,8 @@
   "duplicate_duid_intervals": 0,
   "duplicate_nsw_intervals": 0,
   "duplicate_nsw_prices": 0,
-  "fuel_mix_status": "NOT CLASSIFIED: official DUID-to-region-and-fuel register not yet integrated",
+  "fuel_mix_status": "PARTIAL REGISTERED NSW1 DUID FUEL MIX: excludes rooftop/unregistered generation; unmatched DUIDs remain unassigned, not presumed NSW",
+  "matched_scada_duids": 481,
   "missing_nsw_intervals": [],
   "missing_nsw_prices": [],
   "missing_scada_intervals": [],
@@ -19,10 +20,28 @@
     "mean": 101.862,
     "min": -10.5
   },
+  "nsw_registered_battery_charging_mwh": 7332.102,
+  "nsw_registered_scada_positive_mwh_by_fuel": {
+    "battery": 5536.241,
+    "biomass": 0.0,
+    "coal": 88482.944,
+    "diesel_oil": 0.0,
+    "gas": 5476.45,
+    "hydro": 7097.825,
+    "other": 246.972,
+    "solar": 31014.575,
+    "wind": 13261.407
+  },
+  "registration_conflicts": [
+    "-"
+  ],
+  "registration_duids": 573,
+  "registration_source_url": "https://www.aemo.com.au/-/media/files/electricity/nem/participant_information/nem-registration-and-exemption-list.xlsx?rev=ef75714f508b47f69449a056744d924a&sc_lang=en",
   "scada_nem_intervals": 288,
   "scada_unit_rows": 148889,
   "source": "AEMO NEMWeb public archives, fixed market time UTC+10",
   "source_file_dispatch_sha256": "c15249a51a6c6b59d993eb55aba748304d405e7e8fabe78f9739c6efefce5821",
+  "source_file_registration_sha256": "85c26e28b4e1c65316169c569a9f230aa5b3b20b53b036798fc0fceae630d71a",
   "source_file_scada_sha256": "c31bf1bb1139f6ff446f09386d2db31f25d4431c2057a39361be00a25f58e200",
   "task": "NSW-ELEC-007",
   "time_basis": "AEST UTC+10 no DST, NEM dispatch settlement timestamp",
@@ -77,5 +96,6 @@
     }
   ],
   "unique_scada_duids": 517,
+  "unmatched_scada_duids": 36,
   "valid_complete_day": true
 }
