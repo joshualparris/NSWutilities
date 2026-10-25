@@ -132,7 +132,7 @@ def load_registration(path):
         for row in it:
             name = str(row[idx["duid"]] or "").strip().upper()
             region = str(row[idx["region"]] or "").strip().upper()
-            if not name or region not in ("NSW1","QLD1","VIC1","SA1","TAS1"):
+            if not name or name in ("-", "N/A", "NA") or region not in ("NSW1","QLD1","VIC1","SA1","TAS1"):
                 continue
             primary = str(row[idx["fuel source - primary"]] or "").strip()
             descriptor = str(row[idx["fuel source - descriptor"]] or "").strip()
@@ -144,6 +144,8 @@ def load_registration(path):
                 conflicts.add(name)
             else:
                 registry[name] = entry
+        conflicts.discard("-")
+        registry.pop("-", None)
         for name in conflicts:
             registry.pop(name, None)  # ambiguous DUID: better unknown than incorrect
         if len(registry) < 100:
@@ -245,6 +247,12 @@ def inspect(scada_zip, dispatch_zip, day, strict=True, registry=None, registrati
             "utc": t.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
             **d, **s
         })
+        # Every registered fuel series has an explicit numerical zero when
+        # no unit from that fuel produced energy in an interval.
+        for fuel in FUEL_TYPES:
+            combined[-1].setdefault("nsw_scada_" + fuel + "_mw", 0.0)
+        combined[-1].setdefault("nsw_scada_battery_charging_mw", 0.0)
+        combined[-1].setdefault("nem_scada_unmapped_positive_mw", 0.0)
     report = {
         "task": "NSW-ELEC-007",
         "date_nem_aest": day,
@@ -253,7 +261,7 @@ def inspect(scada_zip, dispatch_zip, day, strict=True, registry=None, registrati
         "source_file_scada_sha256": hashlib.sha256(Path(scada_zip).read_bytes()).hexdigest(),
         "source_file_registration_sha256": registration_sha256,
         "registration_source_url": REGISTRATION_URL if registry else None,
-        "caveat": "SCADA spans entire NEM; summed positive SCADA is not NSW generation or NSW fuel mix. Five-minute SCADA MW integrated as MWh is approximate; source-to-house attribution is invalid.",
+        "caveat": "NEM-wide SCADA totals are not NSW totals; separate NSW1 fuel groups use an AEMO DUID registry snapshot and exclude unmatched DUIDs and behind-the-meter rooftop solar. Five-minute SCADA MW integrated as MWh is approximate, storage charging must not count as generation, and the mix is NOT electricity physically traced to consumers.",
         "dispatch_nsw_intervals": len(records),
         "scada_nem_intervals": len(scada),
         "missing_nsw_intervals": missing_dispatch,
