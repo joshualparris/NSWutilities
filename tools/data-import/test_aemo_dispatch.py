@@ -71,6 +71,31 @@ class AemoImportTests(unittest.TestCase):
             self.assertEqual(rows[0]["utc"], "2026-10-19T14:05:00Z")
             self.assertEqual(quality["fuel_mix_status"].startswith("NOT CLASSIFIED"), True)
 
+    def test_fuel_category_precedence_and_unknown(self):
+        self.assertEqual(mod.fuel_category("Fossil","Waste Coal Mine Gas","Combustion"),"gas")
+        self.assertEqual(mod.fuel_category("Fossil","Black Coal","Steam turbine"),"coal")
+        self.assertEqual(mod.fuel_category("Battery Storage","Grid","Storage"),"battery")
+        self.assertEqual(mod.fuel_category("Hydro","Water","Turbine"),"hydro")
+        self.assertEqual(mod.fuel_category("Solar","PV","Renewable"),"solar")
+        self.assertEqual(mod.fuel_category("Nuclear","Unknown","N/A"),"other")
+
+    def test_nsw_fuel_mapping_does_not_count_other_regions_as_nsw(self):
+        stamp = datetime(2026, 10, 20, 0, 5)
+        with tempfile.TemporaryDirectory() as p:
+            base=Path(p)
+            make_archive(base/"s.zip","scada",[stamp])
+            make_archive(base/"d.zip","dispatch",[stamp])
+            registry={"TEST_COAL":{"region":"NSW1","fuel":"coal"},
+                      "TEST_BATT":{"region":"QLD1","fuel":"battery"}}
+            rows,quality=mod.inspect(base/"s.zip",base/"d.zip","2026-10-20",
+                                      strict=False,registry=registry)
+            self.assertEqual(rows[0]["nsw_scada_coal_mw"],100)
+            self.assertEqual(rows[0]["nsw_scada_battery_mw"],0)
+            self.assertEqual(rows[0]["nsw_scada_battery_charging_mw"],0)
+            self.assertEqual(quality["matched_scada_duids"],2)
+            self.assertEqual(quality["nsw_registered_scada_positive_mwh_by_fuel"]["coal"],
+                             round(100/12,3))
+
     def test_complete_288_interval_trading_day(self):
         start = datetime(2026, 10, 20)
         instants = [start + timedelta(minutes=5*i) for i in range(1, 289)]
