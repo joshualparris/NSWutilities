@@ -1,4 +1,4 @@
-# NSW Utilities — electricity grid research and simulation
+# NSW Utilities — NSW electricity, water and utility simulation research
 
 **As at 25 October 2026 | Public NSW data, real grid examples, open-source game-code audit and a playable Repository Town roadmap.**
 
@@ -14,6 +14,14 @@
 6. [Engineering architecture, type system, equations and 12 acceptance tests](docs/SIMULATION_ARCHITECTURE.md)
 7. [Numbered master work queue NSW-ELEC-001–026](docs/TASKS.md)
 8. [Earlier Repository Town baseline electricity research and existing power-grid snapshot](docs/ELECTRICAL_GRID_FINDINGS_2026-10-25.md)
+
+## NSW water supply, wastewater and modelling research
+
+The [NSW water research synthesis](docs/WATER_RESEARCH_2026-10-25.md) describes catchments, storage and allocations, treatment, water quality, distribution, wastewater and reuse, regional-town examples, data limitations and practical modelling evidence. See the companion [source register](docs/WATER_SOURCES.md) and [13 proposed validation/modelling tasks](docs/WATER_TASKS.md).
+
+These water tasks are **proposals, not completed implementations or assigned RTU work**. Published evidence does not establish a full street-level pipe/sewer network or a calibrated engineering simulator. Keep existing `NSW-ELEC-*` and `RTU-*` task identifiers unchanged; confirm cross-repository ownership before implementation.
+
+The [source archive](imports/NSWutilities-water-2026-10-25.tar.bz2) is kept for reproducibility. All three Markdown files were extracted from the user-supplied bundle without modification; their Git blob hashes match the uploaded originals.
 
 ## Best small-town reference found so far
 
