@@ -1,0 +1,25 @@
+name: NSW-WAT water reference model acceptance
+on:
+  push:
+    paths:
+      - 'src/water/**'
+      - 'tests/water-core.test.mjs'
+      - 'audit/water/**'
+      - '.github/workflows/nsw-water-reference.yml'
+  pull_request:
+    paths:
+      - 'src/water/**'
+      - 'tests/water-core.test.mjs'
+      - 'audit/water/**'
+permissions:
+  contents: read
+jobs:
+  water-reference:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run deterministic flow, safety-boundary and inventory checks
+        run: node --test tests/water-core.test.mjs
