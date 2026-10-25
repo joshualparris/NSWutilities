@@ -47,3 +47,8 @@ The existing `RTU-001–030` labels are **not replaced or renumbered**. `NSW-ELE
 ## RTU-001 baseline audit completed
 
 [234-location electrical source/runtime audit](docs/RTU_001_ELECTRICAL_AUDIT.md), [building CSV](audit/electricity/buildings.csv), [machine-readable evidence](audit/electricity/coverage.json) and [validation log](audit/electricity/validation.txt). Runtime baseline `19a13fe`; tool/evidence candidate `930cfab` in JoshMemory PR #199. No utility feature deployed. This covers RTU-001; NSW-ELEC-005's broader per-light/pump/rail asset registry remains open rather than treating grouped loads as individually mapped assets. Preserve the independent research and NSW-ELEC-026 priority above.
+
+
+## All town systems and sewerage/plumbing research
+
+[RT-SYS-001–016 system register](docs/UTILITY_SYSTEM_REGISTER.md) gives permanent names to utilities and essential services. Electricity research remains with the dedicated ChatGPT research session; water with Manus; sewerage with this ChatGPT Work research strand. [Sewerage report](docs/SEWERAGE_RESEARCH_2026-10-25.md) selects Narromine provisionally, distinguishes installed from operating reuse hardware, and specifies toilets/cisterns, drains, pumps, treatment, faults and overlays. [Sources](docs/SEWERAGE_SOURCES.md) and [RTSW-001–028 queue](docs/SEWERAGE_TASKS.md) include provenance, code/solver references, interfaces, dependencies and acceptance tests. Only research tasks RTSW-001/002 are complete; no new sewer gameplay deployed. Next: RTSW-003 fixture inventory, preserving the existing RTU-022–024 parents and reconciling concurrent inventory work before implementation.

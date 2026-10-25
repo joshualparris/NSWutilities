@@ -1,0 +1,476 @@
+{
+  "schemaVersion": 1,
+  "nextTask": "RTSW-003",
+  "preservedParents": [
+    "RTU-022",
+    "RTU-023",
+    "RTU-024"
+  ],
+  "tasks": [
+    {
+      "id": "RTSW-001",
+      "systemId": "RT-SYS-003",
+      "priority": "P0",
+      "title": "Compare public NSW reference towns",
+      "kind": "research",
+      "dependencies": [],
+      "parent": "RTU-022",
+      "affectedCode": "docs/SEWERAGE_RESEARCH_2026-10-25.md",
+      "acceptance": "Candidate scoring, justified provisional model and explicit unknown geometry",
+      "status": "complete-research",
+      "evidence": [
+        "SEWERAGE_RESEARCH_2026-10-25.md",
+        "SEWERAGE_SOURCES.json"
+      ],
+      "owner": "ChatGPT Work sewerage research"
+    },
+    {
+      "id": "RTSW-002",
+      "systemId": "RT-SYS-003",
+      "priority": "P0",
+      "title": "Publish sourced toilet-to-treatment architecture and current runtime gaps",
+      "kind": "research",
+      "dependencies": [
+        "RTSW-001"
+      ],
+      "parent": "RTU-022",
+      "affectedCode": "docs/SEWERAGE_RESEARCH_2026-10-25.md;docs/SEWERAGE_SOURCES.json",
+      "acceptance": "Primary-source registry, pinned SWMM code review, product examples and owner boundaries",
+      "status": "complete-research",
+      "evidence": [
+        "SEWERAGE_RESEARCH_2026-10-25.md",
+        "SEWERAGE_SOURCES.json"
+      ],
+      "owner": "ChatGPT Work sewerage research"
+    },
+    {
+      "id": "RTSW-003",
+      "systemId": "RT-SYS-003",
+      "priority": "P0",
+      "title": "Inventory every actual fixture and property service mode",
+      "kind": "implementation",
+      "dependencies": [
+        "RTSW-002"
+      ],
+      "parent": "RTU-022",
+      "affectedCode": "tools/ fixture audit;src/world/interior.js;farmhouse-interior.js;shop/civic interiors",
+      "acceptance": "Every registered property has fixture IDs/locations or explicit no-fixture/onsite/unresolved status; coordinate/privacy checks; reconcile NSW-ELEC-005 owner",
+      "status": "open",
+      "evidence": [],
+      "owner": "unassigned; check shared coordination before implementation"
+    },
+    {
+      "id": "RTSW-004",
+      "systemId": "RT-SYS-003",
+      "priority": "P0",
+      "title": "Reconcile water and power transaction contracts with their owners",
+      "kind": "interface",
+      "dependencies": [
+        "RTSW-003"
+      ],
+      "parent": "RTU-022",
+      "affectedCode": "new pure utility adapters; coordinate Manus water and ChatGPT electricity code",
+      "acceptance": "Single water debit/fixture discharge, actual litres and asset supply; duplicate-ID and mixed-legacy migration tests; no edits to claimed owner files without reconciliation",
+      "status": "open",
+      "evidence": [],
+      "owner": "unassigned; check shared coordination before implementation"
+    },
+    {
+      "id": "RTSW-005",
+      "systemId": "RT-SYS-003",
+      "priority": "P0",
+      "title": "Implement versioned sanitary schema and validation",
+      "kind": "implementation",
+      "dependencies": [
+        "RTSW-004"
+      ],
+      "parent": "RTU-022",
+      "affectedCode": "new src/world/sewer-schema.js;tests/sewer-schema.mjs",
+      "acceptance": "Valid nodes/edges/fixtures/sources; reject bad units, unknown IDs, NaN and impossible geometry; static fixtures not claimed real NSW survey",
+      "status": "open",
+      "evidence": [],
+      "owner": "unassigned; check shared coordination before implementation"
+    },
+    {
+      "id": "RTSW-006",
+      "systemId": "RT-SYS-003",
+      "priority": "P0",
+      "title": "Generate labelled synthetic terrain/inverts and service connections",
+      "kind": "implementation",
+      "dependencies": [
+        "RTSW-005"
+      ],
+      "parent": "RTU-022",
+      "affectedCode": "new src/world/sewer-layout.js;addresses.js integration read-only until coordinated",
+      "acceptance": "Every connected fixture reaches intended disposal path; gradient/depth/rising-main constraints; no asserted unsurveyed Narromine route",
+      "status": "open",
+      "evidence": [],
+      "owner": "unassigned; check shared coordination before implementation"
+    },
+    {
+      "id": "RTSW-007",
+      "systemId": "RT-SYS-003",
+      "priority": "P0",
+      "title": "Build one playable house-to-main vertical slice",
+      "kind": "implementation",
+      "dependencies": [
+        "RTSW-006"
+      ],
+      "parent": "RTU-023",
+      "affectedCode": "new sewer core;scoped main.js/interactions integration",
+      "acceptance": "Real walk-up toilet action emits one traceable event through fixture/property/main; no duplicate global 80% wastewater addition",
+      "status": "open",
+      "evidence": [],
+      "owner": "unassigned; check shared coordination before implementation"
+    },
+    {
+      "id": "RTSW-008",
+      "systemId": "RT-SYS-003",
+      "priority": "P0",
+      "title": "Implement finite cistern, dual flush, refill and leaks",
+      "kind": "implementation",
+      "dependencies": [
+        "RTSW-007"
+      ],
+      "parent": "RTU-023",
+      "affectedCode": "new fixture state machine;ui/townpanels.js after ownership check",
+      "acceptance": "4.5/3 L example events conserve storage; mains-off remaining flush, empty cistern, repeated click, partial refill and leakage tests",
+      "status": "open",
+      "evidence": [],
+      "owner": "unassigned; check shared coordination before implementation"
+    },
+    {
+      "id": "RTSW-009",
+      "systemId": "RT-SYS-003",
+      "priority": "P1",
+      "title": "Implement trap/vent/relief and backwater failure states",
+      "kind": "implementation",
+      "dependencies": [
+        "RTSW-008"
+      ],
+      "parent": "RTU-023",
+      "affectedCode": "new property plumbing module;property scene fixtures",
+      "acceptance": "Dry seal/blocked vent diagnosed; ORG differs from reflux valve; overflow location follows declared levels; no installation-compliance claim",
+      "status": "open",
+      "evidence": [],
+      "owner": "unassigned; check shared coordination before implementation"
+    },
+    {
+      "id": "RTSW-010",
+      "systemId": "RT-SYS-003",
+      "priority": "P0",
+      "title": "Implement conservative gravity routing and storage",
+      "kind": "implementation",
+      "dependencies": [
+        "RTSW-006"
+      ],
+      "parent": "RTU-023",
+      "affectedCode": "new pure sewer routing module",
+      "acceptance": "No negative storage or instant loss; transfer caps, partial-full pipe cases, travel delay and deterministic node ordering",
+      "status": "open",
+      "evidence": [],
+      "owner": "unassigned; check shared coordination before implementation"
+    },
+    {
+      "id": "RTSW-011",
+      "systemId": "RT-SYS-003",
+      "priority": "P0",
+      "title": "Add water and pollutant balance ledgers",
+      "kind": "implementation",
+      "dependencies": [
+        "RTSW-010",
+        "RTSW-008"
+      ],
+      "parent": "RTU-023",
+      "affectedCode": "sewer core balance module;tests/sewer-balance.mjs",
+      "acceptance": "Inflows equal stores/exports/spills/losses; concurrent transfers cannot overdraw; explicit reaction/solids accounts",
+      "status": "open",
+      "evidence": [],
+      "owner": "unassigned; check shared coordination before implementation"
+    },
+    {
+      "id": "RTSW-012",
+      "systemId": "RT-SYS-003",
+      "priority": "P0",
+      "title": "Implement wet wells, duty/standby pumps and rising mains",
+      "kind": "implementation",
+      "dependencies": [
+        "RTSW-011"
+      ],
+      "parent": "RTU-023",
+      "affectedCode": "new sewer-pumps module;verified product curve registry",
+      "acceptance": "Hysteresis, head/capacity/efficiency, backup availability, pump starts, failure and finite reserve tests; pressure-rated pipe variant",
+      "status": "open",
+      "evidence": [],
+      "owner": "unassigned; check shared coordination before implementation"
+    },
+    {
+      "id": "RTSW-013",
+      "systemId": "RT-SYS-003",
+      "priority": "P0",
+      "title": "Wire asset-level electrical outage and backup behaviour",
+      "kind": "implementation",
+      "dependencies": [
+        "RTSW-012",
+        "RTSW-004"
+      ],
+      "parent": "RTU-023",
+      "affectedCode": "sewer/power adapter;existing life.js integration after owner reconciliation",
+      "acceptance": "Only supplied assets run; gravity continues during blackout; finite generator fuel; delayed catchment surcharge and recovery",
+      "status": "open",
+      "evidence": [],
+      "owner": "unassigned; check shared coordination before implementation"
+    },
+    {
+      "id": "RTSW-014",
+      "systemId": "RT-SYS-003",
+      "priority": "P1",
+      "title": "Implement rainfall-derived infiltration and separate stormwater boundary",
+      "kind": "implementation",
+      "dependencies": [
+        "RTSW-011"
+      ],
+      "parent": "RTU-023",
+      "affectedCode": "new inflow model;RT-SYS-004 adapter",
+      "acceptance": "No ordinary downpipe-to-sewer connection; fault influx/groundwater/pond rainfall separately conserved; dry/wet comparison",
+      "status": "open",
+      "evidence": [],
+      "owner": "unassigned; check shared coordination before implementation"
+    },
+    {
+      "id": "RTSW-015",
+      "systemId": "RT-SYS-003",
+      "priority": "P1",
+      "title": "Implement obstructions, backpressure, surface spills and alarms",
+      "kind": "implementation",
+      "dependencies": [
+        "RTSW-012",
+        "RTSW-009"
+      ],
+      "parent": "RTU-023",
+      "affectedCode": "sewer faults/state machine;scene hazard presentation",
+      "acceptance": "Property versus trunk failure catchment differs; finite spills and clear alarm cause; surrogate limits stated and tested",
+      "status": "open",
+      "evidence": [],
+      "owner": "unassigned; check shared coordination before implementation"
+    },
+    {
+      "id": "RTSW-016",
+      "systemId": "RT-SYS-003",
+      "priority": "P1",
+      "title": "Implement declared treatment/effluent/sludge scenario",
+      "kind": "implementation",
+      "dependencies": [
+        "RTSW-011",
+        "RTSW-013"
+      ],
+      "parent": "RTU-023",
+      "affectedCode": "new treatment module;existing wastewater-interior.js readout",
+      "acceptance": "Pond process distinct from activated sludge; finite residence/storage/quality; installed-but-inactive reuse; no sewage-to-potable flag",
+      "status": "open",
+      "evidence": [],
+      "owner": "unassigned; check shared coordination before implementation"
+    },
+    {
+      "id": "RTSW-017",
+      "systemId": "RT-SYS-003",
+      "priority": "P1",
+      "title": "Add trade-waste and grease-pretreatment lifecycle",
+      "kind": "implementation",
+      "dependencies": [
+        "RTSW-016"
+      ],
+      "parent": "RTU-023",
+      "affectedCode": "trade-waste module;cafe/pub/industry interfaces",
+      "acceptance": "Waste streams have pretreatment/status; grease maintenance and finite authorised residual disposal; forbidden streams not silently sewered",
+      "status": "open",
+      "evidence": [],
+      "owner": "unassigned; check shared coordination before implementation"
+    },
+    {
+      "id": "RTSW-018",
+      "systemId": "RT-SYS-003",
+      "priority": "P2",
+      "title": "Add explicit off-sewer septic/onsite branch",
+      "kind": "implementation",
+      "dependencies": [
+        "RTSW-016"
+      ],
+      "parent": "RTU-023",
+      "affectedCode": "new onsite module;property registry",
+      "acceptance": "Finite stores/disposal, site assumptions, maintenance and desludging; no default off-grid connection without assigned scenario",
+      "status": "open",
+      "evidence": [],
+      "owner": "unassigned; check shared coordination before implementation"
+    },
+    {
+      "id": "RTSW-019",
+      "systemId": "RT-SYS-003",
+      "priority": "P0",
+      "title": "Migrate saves and replay all fixture/network states",
+      "kind": "implementation",
+      "dependencies": [
+        "RTSW-015",
+        "RTSW-016"
+      ],
+      "parent": "RTU-023",
+      "affectedCode": "life.js snapshot/restore after ownership check;schema migration",
+      "acceptance": "Mid-flush/refill/in-transit/wet-well/sludge/repair reload equals uninterrupted run; dedupe persists; old saves retained",
+      "status": "open",
+      "evidence": [],
+      "owner": "unassigned; check shared coordination before implementation"
+    },
+    {
+      "id": "RTSW-020",
+      "systemId": "RT-SYS-003",
+      "priority": "P1",
+      "title": "Add sewer and building-plumbing inspection overlays",
+      "kind": "implementation",
+      "dependencies": [
+        "RTSW-015"
+      ],
+      "parent": "RTU-024",
+      "affectedCode": "new ui sewer overlay;main.js and utilities settings after ownership check",
+      "acceptance": "Selective underground routes, inverts/profile, source/status/catchment legend; distinguish sewer from stormwater; mobile controls",
+      "status": "open",
+      "evidence": [],
+      "owner": "unassigned; check shared coordination before implementation"
+    },
+    {
+      "id": "RTSW-021",
+      "systemId": "RT-SYS-003",
+      "priority": "P1",
+      "title": "Render fixtures, service connections, access points and pump sites",
+      "kind": "implementation",
+      "dependencies": [
+        "RTSW-020"
+      ],
+      "parent": "RTU-024",
+      "affectedCode": "world fixture/pipe/crew visuals;original geometry",
+      "acceptance": "Visible pipes join actual graph; no routes through doors; product dimensions and accessible fixture alternatives; maps/CAD licence respected",
+      "status": "open",
+      "evidence": [],
+      "owner": "unassigned; check shared coordination before implementation"
+    },
+    {
+      "id": "RTSW-022",
+      "systemId": "RT-SYS-003",
+      "priority": "P1",
+      "title": "Connect NPC routine usage and public-toilet availability",
+      "kind": "implementation",
+      "dependencies": [
+        "RTSW-008",
+        "RTSW-019"
+      ],
+      "parent": "RTU-024",
+      "affectedCode": "household.js/needs.js/interior actions after ownership check",
+      "acceptance": "Occupancy-generated usage once; closure/queue/alternative access; player not required to micromanage every NPC flush",
+      "status": "open",
+      "evidence": [],
+      "owner": "unassigned; check shared coordination before implementation"
+    },
+    {
+      "id": "RTSW-023",
+      "systemId": "RT-SYS-003",
+      "priority": "P1",
+      "title": "Connect inspections, maintenance, repairs and tanker logistics",
+      "kind": "implementation",
+      "dependencies": [
+        "RTSW-015",
+        "RTSW-019"
+      ],
+      "parent": "RTU-024",
+      "affectedCode": "government.js/jobs.js integration after owner reconciliation",
+      "acceptance": "Finite parts/pay/crew time/tanker capacity and receiving ledger; no repair auto-success or wastewater deletion",
+      "status": "open",
+      "evidence": [],
+      "owner": "unassigned; check shared coordination before implementation"
+    },
+    {
+      "id": "RTSW-024",
+      "systemId": "RT-SYS-003",
+      "priority": "P0",
+      "title": "Run pinned SWMM reference fixture comparison",
+      "kind": "verification",
+      "dependencies": [
+        "RTSW-010",
+        "RTSW-012"
+      ],
+      "parent": "RTU-023",
+      "affectedCode": "offline reference fixtures;solver licence/dependency audit",
+      "acceptance": "Pin solver/input/units; compare free flow, surcharge, wet-well outage/recovery and balance with justified numeric tolerances; no benchmark success without execution",
+      "status": "open",
+      "evidence": [],
+      "owner": "unassigned; check shared coordination before implementation"
+    },
+    {
+      "id": "RTSW-025",
+      "systemId": "RT-SYS-003",
+      "priority": "P0",
+      "title": "Run full town multi-day fault/time-acceleration regression",
+      "kind": "verification",
+      "dependencies": [
+        "RTSW-019",
+        "RTSW-022",
+        "RTSW-024"
+      ],
+      "parent": "RTU-023",
+      "affectedCode": "tests/sewer-soak.mjs;existing town suites",
+      "acceptance": "All connected properties, garden exclusion, drought/refill, wet weather, pump blackout/recovery, spill and treatment conservation; deterministic replay",
+      "status": "open",
+      "evidence": [],
+      "owner": "unassigned; check shared coordination before implementation"
+    },
+    {
+      "id": "RTSW-026",
+      "systemId": "RT-SYS-003",
+      "priority": "P0",
+      "title": "Playtest actual fixture and sewer overlay journeys",
+      "kind": "verification",
+      "dependencies": [
+        "RTSW-020",
+        "RTSW-021",
+        "RTSW-023",
+        "RTSW-025"
+      ],
+      "parent": "RTU-024",
+      "affectedCode": "desktop/Android browser acceptance and physical device record separately",
+      "acceptance": "Walk up, flush/refill, block, report, repair, outage, reload, overlay, leave/return; assert real state and screenshots; no handset claim from emulation",
+      "status": "open",
+      "evidence": [],
+      "owner": "unassigned; check shared coordination before implementation"
+    },
+    {
+      "id": "RTSW-027",
+      "systemId": "RT-SYS-003",
+      "priority": "P0",
+      "title": "Publish privacy-safe tested sewer release",
+      "kind": "release",
+      "dependencies": [
+        "RTSW-026"
+      ],
+      "parent": "RTU-024",
+      "affectedCode": "existing build/release/hosting pipeline",
+      "acceptance": "Public build/privacy and regression gates; reviewed merge; exact deployed SHA/hash; actual hosted fixture/outage verification",
+      "status": "open",
+      "evidence": [],
+      "owner": "unassigned; check shared coordination before implementation"
+    },
+    {
+      "id": "RTSW-028",
+      "systemId": "RT-SYS-003",
+      "priority": "P1",
+      "title": "Close sewer commissioning with evidence and limitations",
+      "kind": "acceptance",
+      "dependencies": [
+        "RTSW-027"
+      ],
+      "parent": "RTU-022–024",
+      "affectedCode": "checkpoint/coordination;central task state;NSWutilities evidence",
+      "acceptance": "Record calibration gaps, solver accuracy/performance, versioned sources and tested scenarios; close only individually accepted parents",
+      "status": "open",
+      "evidence": [],
+      "owner": "unassigned; check shared coordination before implementation"
+    }
+  ]
+}

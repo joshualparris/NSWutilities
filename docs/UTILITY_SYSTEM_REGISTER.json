@@ -1,0 +1,149 @@
+{
+  "schemaVersion": 1,
+  "systems": [
+    {
+      "id": "RT-SYS-001",
+      "name": "Electricity",
+      "classification": "utility",
+      "owner": "ChatGPT electricity deep-research session",
+      "scope": "Grid, generation, solar, storage, meters, circuits, faults and restoration",
+      "existingWork": "RTU-001–018",
+      "status": "Existing abstract prototype; research assigned"
+    },
+    {
+      "id": "RT-SYS-002",
+      "name": "Drinking and non-potable water",
+      "classification": "utility",
+      "owner": "Manus (user-assigned)",
+      "scope": "Sources, treatment, storage, pressure, mains, meters, hydrants; separately labelled reclaimed supply",
+      "existingWork": "RTU-019–021",
+      "status": "Research assigned; integration contract proposed"
+    },
+    {
+      "id": "RT-SYS-003",
+      "name": "Sewerage and sanitary plumbing",
+      "classification": "utility",
+      "owner": "ChatGPT Work sewerage research (this session)",
+      "scope": "Toilets/cisterns, traps/vents, drains, laterals, gravity sewers, lift stations, treatment, effluent and biosolids",
+      "existingWork": "RTU-022–024",
+      "status": "Research/specification; no new runtime feature"
+    },
+    {
+      "id": "RT-SYS-004",
+      "name": "Stormwater and flood drainage",
+      "classification": "utility",
+      "owner": "Unassigned",
+      "scope": "Roof downpipes, street pits, culverts, detention and receiving waters; separate sanitary network",
+      "existingWork": "RTU-022 interface; dedicated implementation unassigned",
+      "status": "Unimplemented network"
+    },
+    {
+      "id": "RT-SYS-005",
+      "name": "Gas and LPG",
+      "classification": "utility",
+      "owner": "Unassigned",
+      "scope": "Reticulated gas only where evidenced, or bottles/bulk LPG, regulators, meters and appliance supplies",
+      "existingWork": "RTU-025–027",
+      "status": "Research/implementation open"
+    },
+    {
+      "id": "RT-SYS-006",
+      "name": "Fixed internet and telephone",
+      "classification": "utility",
+      "owner": "Unassigned",
+      "scope": "NBN access technologies, premises terminals, exchanges/cabinets, backhaul and backup power",
+      "existingWork": "No existing dedicated RTU parent",
+      "status": "Scope designation only"
+    },
+    {
+      "id": "RT-SYS-007",
+      "name": "Mobile communications",
+      "classification": "utility",
+      "owner": "Unassigned",
+      "scope": "Towers, radios, backhaul, coverage, capacity, batteries/generators and outage effects",
+      "existingWork": "No existing dedicated RTU parent",
+      "status": "Scope designation only"
+    },
+    {
+      "id": "RT-SYS-008",
+      "name": "Solid waste, recycling and organics",
+      "classification": "municipal service",
+      "owner": "Unassigned",
+      "scope": "Bins, collection, transfer, sorting, FOGO, landfill and authorised residual disposal",
+      "existingWork": "RTU-029 integration; existing waste simulation",
+      "status": "Existing prototype; no new implementation claim"
+    },
+    {
+      "id": "RT-SYS-009",
+      "name": "Fuel supply and logistics",
+      "classification": "supply chain",
+      "owner": "Unassigned",
+      "scope": "Petrol/diesel/LPG imports, deliveries, tanks, service stations and backup fuel",
+      "existingWork": "RTU-005/010/013/029 interfaces",
+      "status": "Existing generic fuel; detailed model open"
+    },
+    {
+      "id": "RT-SYS-010",
+      "name": "Roads, rail and public transport",
+      "classification": "essential infrastructure",
+      "owner": "Unassigned",
+      "scope": "Roads/bridges/footpaths, rail, crossings, freight and passenger transport",
+      "existingWork": "Existing town/transport work; no new RTU ID",
+      "status": "Existing geometry/prototypes"
+    },
+    {
+      "id": "RT-SYS-011",
+      "name": "Public lighting and traffic controls",
+      "classification": "essential infrastructure",
+      "owner": "Unassigned",
+      "scope": "Streetlight circuits, illuminated signs, traffic signals and crossing controls",
+      "existingWork": "RTU-011–015; preserve existing RLT tasks",
+      "status": "Existing rendering; electrical mapping open"
+    },
+    {
+      "id": "RT-SYS-012",
+      "name": "Emergency services and warning systems",
+      "classification": "public service",
+      "owner": "Unassigned",
+      "scope": "Police, fire, ambulance, dispatch, emergency communications and response dependencies",
+      "existingWork": "Existing emergency/justice modules",
+      "status": "Existing prototype; no new acceptance claim"
+    },
+    {
+      "id": "RT-SYS-013",
+      "name": "Health, education and civic facilities",
+      "classification": "public service",
+      "owner": "Unassigned",
+      "scope": "Clinic, school/TAFE/university, council, library, public toilets and service continuity",
+      "existingWork": "Existing civic modules; RTU per-building interfaces",
+      "status": "Existing facilities; continuity work open"
+    },
+    {
+      "id": "RT-SYS-014",
+      "name": "Heating, cooling and thermal services",
+      "classification": "building service / optional utility",
+      "owner": "Unassigned",
+      "scope": "Per-building hot water/HVAC; shared district heating/cooling only if justified",
+      "existingWork": "RTU-006/012 plus water/gas interfaces",
+      "status": "Household abstraction; district network not assumed"
+    },
+    {
+      "id": "RT-SYS-015",
+      "name": "Post and parcel delivery",
+      "classification": "public/commercial service",
+      "owner": "Unassigned",
+      "scope": "Sorting, mail/parcel routing, delivery and facility dependencies",
+      "existingWork": "Existing post/depot simulation",
+      "status": "Existing prototype"
+    },
+    {
+      "id": "RT-SYS-016",
+      "name": "Broadcasting and public information",
+      "classification": "communications service",
+      "owner": "Unassigned",
+      "scope": "Radio/TV transmitters, receivers, public announcements and warnings",
+      "existingWork": "RT-SYS-006/007/012 interfaces",
+      "status": "Scope designation only"
+    }
+  ]
+}
