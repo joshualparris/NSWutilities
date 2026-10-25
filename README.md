@@ -11,7 +11,9 @@
 3. [Actual open-source game/engineering solver code audit](docs/OPEN_SOURCE_SIMULATION_AUDIT.md)
 4. [Primary-source evidence register](docs/SOURCES.md)
 5. [Public pole GIS and equipment visual evidence](docs/GIS_ASSET_EVIDENCE.md)
-6. [Numbered master work queue NSW-ELEC-001–025](docs/TASKS.md)
+6. [Engineering architecture, type system, equations and 12 acceptance tests](docs/SIMULATION_ARCHITECTURE.md)
+7. [Numbered master work queue NSW-ELEC-001–026](docs/TASKS.md)
+8. [Earlier Repository Town baseline electricity research and existing power-grid snapshot](docs/ELECTRICAL_GRID_FINDINGS_2026-10-25.md)
 
 ## Best small-town reference found so far
 
