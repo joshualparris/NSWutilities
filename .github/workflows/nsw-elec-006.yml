@@ -14,6 +14,26 @@ jobs:
     timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
+      - name: Inspect official 20 Oct 2026 AEMO DUID region-fuel workbook
+        shell: bash
+        run: |
+          python -m pip install --disable-pip-version-check --quiet openpyxl
+          python - <<'PY'
+          import io,urllib.request,openpyxl
+          u='https://www.aemo.com.au/-/media/files/electricity/nem/participant_information/nem-registration-and-exemption-list.xlsx?rev=ef75714f508b47f69449a056744d924a&sc_lang=en'
+          try:
+            with urllib.request.urlopen(urllib.request.Request(u,headers={'User-Agent':'Mozilla/5.0'}),timeout=30) as r: data=r.read()
+            print('AEMO_REGISTRATION_HTTP_200_BYTES',len(data))
+            w=openpyxl.load_workbook(io.BytesIO(data),read_only=True,data_only=True)
+            print('AEMO_REGISTRATION_SHEETS',w.sheetnames)
+            for s in w:
+              if 'Scheduled Load' in s.title or 'PU and ' in s.title:
+                for i,row in enumerate(s.values):
+                  print('REG_ROW',i,[str(x)[:80] if x is not None else '' for x in row[:18]])
+                  if i>=8:break
+          except Exception as e:
+            print('AEMO_REGISTRATION_PREVIEW_ERROR',type(e).__name__,str(e))
+          PY
       - name: Python schema and AEST regression tests
         run: python -m unittest discover -s tools/data-import -p 'test_*.py' -v
       - name: Import 20 October 2026 real AEMO 5-minute data
