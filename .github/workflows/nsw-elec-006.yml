@@ -1,0 +1,69 @@
+name: NSW-ELEC-007 AEMO verified import
+on:
+  push:
+    branches: [feat/nsw-elec-006-essential-zone-load]
+    paths:
+      - .github/workflows/nsw-elec-006.yml
+      - tools/data-import/**
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Inspect official 20 Oct 2026 AEMO DUID region-fuel workbook
+        shell: bash
+        run: |
+          python -m pip install --disable-pip-version-check --quiet openpyxl
+          python - <<'PY'
+          import io,urllib.request,openpyxl
+          u='https://www.aemo.com.au/-/media/files/electricity/nem/participant_information/nem-registration-and-exemption-list.xlsx?rev=ef75714f508b47f69449a056744d924a&sc_lang=en'
+          try:
+            with urllib.request.urlopen(urllib.request.Request(u,headers={'User-Agent':'Mozilla/5.0'}),timeout=30) as r: data=r.read()
+            print('AEMO_REGISTRATION_HTTP_200_BYTES',len(data))
+            w=openpyxl.load_workbook(io.BytesIO(data),read_only=True,data_only=True)
+            print('AEMO_REGISTRATION_SHEETS',w.sheetnames)
+            for s in w:
+              if 'Scheduled Load' in s.title or 'PU and ' in s.title:
+                for i,row in enumerate(s.values):
+                  print('REG_ROW',i,[str(x)[:80] if x is not None else '' for x in row[:18]])
+                  if i>=8:break
+          except Exception as e:
+            print('AEMO_REGISTRATION_PREVIEW_ERROR',type(e).__name__,str(e))
+          PY
+      - name: Python schema and AEST regression tests
+        run: python -m unittest discover -s tools/data-import -p 'test_*.py' -v
+      - name: Import 20 October 2026 real AEMO 5-minute data
+        run: python tools/data-import/aemo_dispatch.py --day 2026-10-20 --out data/aemo/2026-10-20
+      - name: Verify imported archive coverage
+        run: |
+          python - <<'PY'
+          import csv,json,pathlib
+          p=pathlib.Path('data/aemo/2026-10-20')
+          r=json.loads((p/'quality_report.json').read_text())
+          rows=list(csv.DictReader((p/'nsw_nem_dispatch_5m.csv').open()))
+          assert len(rows)==288, len(rows)
+          assert r['valid_complete_day'],r
+          assert r['dispatch_nsw_intervals']==288
+          assert r['scada_nem_intervals']==288
+          print('VERIFIED REAL AEMO IMPORT','day',r['date_nem_aest'],'intervals',len(rows),'duids',r['unique_scada_duids'])
+          print('NSW DEMAND MW',r['nsw_demand_mw_stats'])
+          print('NSW SPOT PRICE $/MWh',r['nsw_price_aud_per_mwh_stats'])
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: nsw-elec-007-aemo-2026-10-20
+          path: data/aemo/2026-10-20/
+          retention-days: 90
+      - name: Publish reproducible derived public time series to task branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/aemo/2026-10-20/nsw_nem_dispatch_5m.csv data/aemo/2026-10-20/quality_report.json
+          if ! git diff --cached --quiet; then
+            git commit -m "data(NSW-ELEC-007): publish verified AEMO NSW dispatch sample"
+            git push
+          fi

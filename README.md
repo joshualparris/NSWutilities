@@ -14,6 +14,8 @@
 6. [Engineering architecture, type system, equations and 12 acceptance tests](docs/SIMULATION_ARCHITECTURE.md)
 7. [Numbered master work queue NSW-ELEC-001–026](docs/TASKS.md)
 8. [Earlier Repository Town baseline electricity research and existing power-grid snapshot](docs/ELECTRICAL_GRID_FINDINGS_2026-10-25.md)
+9. [NSW-ELEC-007 — Real AEMO five-minute data, importer and verified quality](docs/NSW_ELEC_007_AEMO_DATA.md)
+10. [AEMO 20 October 2026 derived time series](data/aemo/2026-10-20/nsw_nem_dispatch_5m.csv) and [quality report](data/aemo/2026-10-20/quality_report.json)
 
 ## NSW water supply, wastewater and modelling research
 
@@ -38,7 +40,7 @@ The existing `RTU-001–030` labels are **not replaced or renumbered**. `NSW-ELE
 
 ## Next step
 
-**NSW-ELEC-005:** inspect all Repository Town buildings and non-building loads with stable references. **NSW-ELEC-026 (new P0):** separately validate public GIS pole-data licence/completeness *before* claiming geolocated service lines. Other immediate independent tasks: NSW-ELEC-006 import Essential Energy 30-minute datasets and NSW-ELEC-007 import AEMO five-minute data.
+**NSW-ELEC-005:** the RTU-001 234-site building audit is already completed and mirrored, but a detailed light/pump/rail inventory is still needed. **NSW-ELEC-007:** reproducible AEMO 20 Oct 2026 upstream NSW demand, spot price and registered generator fuel data imported with passing GitHub Actions tests; more days remain. **NSW-ELEC-006:** Essential Energy 30-minute zone data import blocked by source HTTP 403 on GitHub runner. **NSW-ELEC-026:** independently validate NSW pole GIS rights and Menindee coverage before building the realistic physical network.
 
 **Evidence rules:** keep source URLs, version/dates, geography, units, and factual/inferred/synthetic labels. Public documents may be copyright-restricted; use links and original 3D assets rather than re-uploading diagrams without permission. Grid physics, game approximation, and electrical-safety engineering are distinct layers.
 
