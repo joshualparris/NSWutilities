@@ -81,6 +81,8 @@ def to_num(value, label):
 
 def inspect(scada_zip, dispatch_zip, day, strict=True):
     date = datetime.strptime(day, "%Y-%m-%d").date()
+    start = datetime.combine(date, datetime.min.time(), tzinfo=NEM_TZ)
+    end = start + timedelta(days=1)
     records = {}
     scada = {}
     source_summary = {"duid_mwh": collections.defaultdict(float),
@@ -93,7 +95,7 @@ def inspect(scada_zip, dispatch_zip, day, strict=True):
         if table != "UNIT_SCADA":
             continue
         instant = parse_nem_time(row["SETTLEMENTDATE"])
-        if instant.date() != date:
+        if not (start < instant <= end):
             continue
         duid = row["DUID"].strip().upper()
         if not duid:
@@ -116,7 +118,7 @@ def inspect(scada_zip, dispatch_zip, day, strict=True):
         if table != "REGIONSUM" or row.get("REGIONID", "").strip().upper() != "NSW1":
             continue
         instant = parse_nem_time(row["SETTLEMENTDATE"])
-        if instant.date() != date:
+        if not (start < instant <= end):
             continue
         if instant in seen_dispatch_times:
             duplicates += 1
@@ -127,12 +129,9 @@ def inspect(scada_zip, dispatch_zip, day, strict=True):
             "nsw_total_demand_mw": to_num(row.get("TOTALDEMAND"), "TOTALDEMAND"),
             "nsw_spot_price_aud_per_mwh": to_num(row.get("RRP"), "RRP"),
         }
-    expected = [datetime.combine(date, datetime.min.time(), tzinfo=NEM_TZ) + timedelta(minutes=5*i)
-                for i in range(1, 289)]
-    # 00:00 settlement instant marks the *preceding* 5-minute interval in daily archives;
-    # compare only calendar-day settlement timestamps and record 00:00 as the first sample.
-    expected = [datetime.combine(date, datetime.min.time(), tzinfo=NEM_TZ)
-                + timedelta(minutes=5*i) for i in range(288)]
+    # Dispatch settlement timestamps mark interval END. A trading day contains
+    # 00:05 ... 23:55 and 00:00 the next calendar day (288 intervals).
+    expected = [start + timedelta(minutes=5*i) for i in range(1, 289)]
     missing_dispatch = [t.isoformat() for t in expected if t not in records]
     missing_scada = [t.isoformat() for t in expected if t not in scada]
     combined = []
