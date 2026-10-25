@@ -1,6 +1,7 @@
 # NSW electricity research and implementation queue
 
-**Date:** 2026-10-25  
+**Date:** 2026-10-25
+**Architecture:** [Detailed types, physical approximations, outage logic and tests](./SIMULATION_ARCHITECTURE.md)  
 **Scope:** `NSW-ELEC-*` tracks research/reference-model work in **NSWutilities**. This is **not a renumbering** of the existing `RTU-001` through `RTU-030` tasks in Repository Town's masterplan; these new IDs cover the source/reference research and validation strand. Implementation in Repository Town must link the matching RTU ID and avoid duplicate agent ownership.  
 **Prioritisation:** P0 = blocks useful simulation; P1 = realism essentials; P2 = expansion. Claim one task at a time with branch/issue and completion evidence.
 
