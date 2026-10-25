@@ -1,57 +1,49 @@
-name: NSW-ELEC public electricity data preflight
+name: NSW-ELEC-007 AEMO verified import
 on:
   push:
     branches: [feat/nsw-elec-006-essential-zone-load]
-    paths: [.github/workflows/nsw-elec-006.yml, 'tools/data-import/**']
+    paths:
+      - .github/workflows/nsw-elec-006.yml
+      - tools/data-import/**
   workflow_dispatch:
 permissions:
-  contents: read
+  contents: write
 jobs:
-  inspect:
+  import:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
-      - name: Inspect AEMO 20 Oct 2026 public zipped dispatch and generator data
-        shell: bash
+      - name: Python schema and AEST regression tests
+        run: python -m unittest discover -s tools/data-import -p 'test_*.py' -v
+      - name: Import 20 October 2026 real AEMO 5-minute data
+        run: python tools/data-import/aemo_dispatch.py --day 2026-10-20 --out data/aemo/2026-10-20
+      - name: Verify imported archive coverage
         run: |
           python - <<'PY'
-          from urllib.request import Request, urlopen
-          from tempfile import NamedTemporaryFile
-          from zipfile import ZipFile
-          from io import TextIOWrapper, BytesIO
-          import os,shutil
-          urls={
-            'DISPATCH_SCADA': 'https://nemweb.com.au/Reports/ARCHIVE/Dispatch_SCADA/PUBLIC_DISPATCHSCADA_20261020.zip',
-            'DISPATCH_IS': 'https://nemweb.com.au/Reports/ARCHIVE/DispatchIS_Reports/PUBLIC_DISPATCHIS_20261020.zip',
-          }
-          for key,url in urls.items():
-            try:
-              with NamedTemporaryFile(suffix='.zip', delete=False) as f:
-                path=f.name
-                with urlopen(Request(url,headers={'User-Agent':'Mozilla/5.0'}), timeout=90) as response:
-                  print(key,'HTTP',response.status,'LENGTH',response.headers.get('content-length'))
-                  shutil.copyfileobj(response, f)
-              try:
-                with ZipFile(path) as z:
-                  print(key,'FILES',[(x.filename,x.file_size) for x in z.infolist()][:6])
-                  names=[x for x in z.namelist() if x.lower().endswith('.csv')]
-                  if not names:
-                    inner=[x for x in z.namelist() if x.lower().endswith('.zip')]
-                    if inner:
-                      with ZipFile(BytesIO(z.read(inner[0]))) as nested:
-                        print(key,'NESTED_FILES',nested.namelist())
-                        names=[x for x in nested.namelist() if x.lower().endswith('.csv')]
-                        if names:
-                          with nested.open(names[0]) as raw:
-                            stream=TextIOWrapper(raw,encoding='utf-8-sig',errors='replace')
-                            for i in range(12): print(key,'HEAD',i,repr(next(stream).strip()[:240]))
-                  else:
-                    with z.open(names[0]) as raw:
-                      stream=TextIOWrapper(raw,encoding='utf-8-sig',errors='replace')
-                      for i in range(12): print(key,'HEAD',i,repr(next(stream).strip()[:240]))
-              finally:
-                os.unlink(path)
-            except Exception as e:
-              print(key,'FETCH_ERROR',type(e).__name__,str(e))
+          import csv,json,pathlib
+          p=pathlib.Path('data/aemo/2026-10-20')
+          r=json.loads((p/'quality_report.json').read_text())
+          rows=list(csv.DictReader((p/'nsw_nem_dispatch_5m.csv').open()))
+          assert len(rows)==288, len(rows)
+          assert r['valid_complete_day'],r
+          assert r['dispatch_nsw_intervals']==288
+          assert r['scada_nem_intervals']==288
+          print('VERIFIED REAL AEMO IMPORT','day',r['date_nem_aest'],'intervals',len(rows),'duids',r['unique_scada_duids'])
+          print('NSW DEMAND MW',r['nsw_demand_mw_stats'])
+          print('NSW SPOT PRICE $/MWh',r['nsw_price_aud_per_mwh_stats'])
           PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: nsw-elec-007-aemo-2026-10-20
+          path: data/aemo/2026-10-20/
+          retention-days: 90
+      - name: Publish reproducible derived public time series to task branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/aemo/2026-10-20/nsw_nem_dispatch_5m.csv data/aemo/2026-10-20/quality_report.json
+          if ! git diff --cached --quiet; then
+            git commit -m "data(NSW-ELEC-007): publish verified AEMO NSW dispatch sample"
+            git push
+          fi
