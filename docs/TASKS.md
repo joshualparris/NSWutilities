@@ -11,9 +11,9 @@
 | 2 | NSW-ELEC-002 | P0 | Select town and document electrical evidence matrix | 001 | [x] **Provisional** Menindee / Broken Hill selection with candidate matrix; [ ] verify exhaustive stronger alternatives |
 | 3 | NSW-ELEC-003 | P0 | Compile primary source evidence and map backed regional topology | 002 | [x] first-pass 30 sources and published regional schematic; [ ] fully reconcile Menindee voltages and actual service specifics |
 | 4 | NSW-ELEC-004 | P0 | Audit at least three actual open-source games and three engineering engines | 001 | [x] original Micropolis `s_power.c`, Simutrans `powernet.cc`/`leitung2.cc`, Mindustry `PowerGraph.java` inspected; [ ] run source and licence integration verification |
-| 5 | NSW-ELEC-005 | P0 | Audit Repository Town's current electrical assets and all buildings | 003 | [ ] machine-readable audit mapping each building, light, pump, rail, etc to stable ID; cross-ref **RTU-001** |
-| 6 | NSW-ELEC-006 | P0 | Import historical Essential Energy zone-substation power series | 003 | [ ] data pipeline + interval quality report, AEST handling, CSV schema, plots and tests |
-| 7 | NSW-ELEC-007 | P0 | Import real AEMO market and generation profiles | 003 | [ ] reproducible 5-minute snapshots and NEM source mix (regional not building attribution) |
+| 5 | NSW-ELEC-005 | P0 | Audit Repository Town's current electrical assets and all buildings | 003 | [x] **234 site** CSV/JSON, 188 houses + 46 other registered sites, 10 probes, source-backed audit mirrored here from **RTU-001**; **individual service meters remain zero and are RTU-003** |
+| 6 | NSW-ELEC-006 | P0 | Import historical Essential Energy zone-substation power series | 003 | [ ] **BLOCKED**: published 2024-25 combined ZIP returned HTTP 403 in GitHub Actions; verified failure run 40152890078; alternative access and licence/date checks still required |
+| 7 | NSW-ELEC-007 | P0 | Import real AEMO market and generation profiles | 003 | [x] **one verified 20 Oct 2026 day**, 288 NSW demand/price records + generator SCADA DUID-to-fuel group; source SHA256 + CI + regression tests. [ ] multiple dates, final fuel registry chronology; [research/data evidence](./NSW_ELEC_007_AEMO_DATA.md) |
 | 8 | NSW-ELEC-008 | P0 | Draft canonical node/edge/phase/transformer/storage schemas with source provenance | 005 | [ ] JSON Schema/TS types; tests for ID uniqueness, phase connection, upstream edges |
 | 9 | NSW-ELEC-009 | P0 | Generate *labelled synthetic* Menindee-scale LV network using NSW conventions | 006,008 | [ ] poles, distribution transformers, service drops and building registry connected with deterministic fixture tests; cross-ref **RTU-003** |
 | 10 | NSW-ELEC-010 | P0 | Implement fast network topology and island recomputation | 008,009 | [ ] branch open/close, recomputed sources, phase-aware reachability and loop guards; cross-ref RTU task |
@@ -44,8 +44,8 @@
 - Each NSW-ELEC issue/PR must link the corresponding RTU task if its implementation modifies Repository Town.
 - Source provenance classification: **documented**, **inferred**, **synthetic**; each item stores `source_id`, as-of date, confidence and document page.
 - Completion means code/tests/commits as applicable, not merely a plan.
-- Currently **only first-pass research is verified committed**. No zone time series download, real building registry, working power simulation or production gameplay verification has occurred in this run.
+- Research, the 234-site source-derived inventory and an AEMO one-day source-backed CSV/quality-report import have been verified. Essential Energy historical substation loads remain blocked (403). A full building electrical-service registry, working realistic physical power flow and production gameplay verification remain **unimplemented**.
 
 ## Next agent's immediate instruction
 
-**Start NSW-ELEC-005, then NSW-ELEC-026**: inspect Repository Town's latest default branch and utility masterplan, enumerate *all* actual buildings and municipal loads, export a stable CSV/JSON asset list with grid references and accurate world coordinates, cross-check with scene data, and post unit tests or an audit fixture. In parallel, **NSW-ELEC-006** is data-only and can be assigned independently to another agent. Do not assign implementation to agents currently working on the same RTU IDs.
+**Next available: NSW-ELEC-026**, then NSW-ELEC-008 and -009 with their prerequisites. NSW-ELEC-005 is audit-complete and the 234-row files already exist. NSW-ELEC-007 has one real AEMO sample day and reusable importer; additional historic days remain an enhancement. NSW-ELEC-006 should be separately unblocked using licensed Essential Energy data. Do not assign implementation to agents currently working on the same RTU IDs.
