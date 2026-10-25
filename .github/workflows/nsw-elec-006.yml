@@ -1,7 +1,7 @@
 name: NSW-ELEC-007 AEMO verified import
 on:
   push:
-    branches: [feat/nsw-elec-006-essential-zone-load]
+    branches: [main, feat/nsw-elec-006-essential-zone-load]
     paths:
       - .github/workflows/nsw-elec-006.yml
       - tools/data-import/**
