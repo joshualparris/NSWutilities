@@ -359,5 +359,40 @@
       "parent": "RTU-030",
       "status": "open"
     }
+  ],
+  "triageOrder": [
+    "RTSM-003",
+    "RTSM-004",
+    "RTSM-005",
+    "RTSM-006",
+    "RTSM-007",
+    "RTSM-008",
+    "RTSM-009",
+    "RTSM-010",
+    "RTSM-011",
+    "RTSM-013",
+    "RTSM-015",
+    "RTSM-019",
+    "RTSM-020",
+    "RTSM-028",
+    "RTSM-012",
+    "RTSM-014",
+    "RTSM-016",
+    "RTSM-017",
+    "RTSM-018",
+    "RTSM-021",
+    "RTSM-022",
+    "RTSM-023",
+    "RTSM-024",
+    "RTSM-029",
+    "RTSM-025",
+    "RTSM-026",
+    "RTSM-027",
+    "RTSM-030"
+  ],
+  "nextUnblockedTasks": [
+    "RTSM-003",
+    "RTSM-004",
+    "RTSM-007"
   ]
 }

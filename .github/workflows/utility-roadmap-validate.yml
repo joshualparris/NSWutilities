@@ -1,0 +1,26 @@
+name: Utility roadmap validation
+on:
+  push:
+    paths:
+      - 'docs/STORMWATER_TASKS.json'
+      - 'docs/UTILITY_ROADMAP_AUDIT_2026-10-25.json'
+      - 'docs/UTILITY_SYSTEM_REGISTER.json'
+      - 'tests/roadmap-audit.test.mjs'
+      - '.github/workflows/utility-roadmap-validate.yml'
+  pull_request:
+    paths:
+      - 'docs/STORMWATER_TASKS.json'
+      - 'docs/UTILITY_ROADMAP_AUDIT_2026-10-25.json'
+      - 'docs/UTILITY_SYSTEM_REGISTER.json'
+      - 'tests/roadmap-audit.test.mjs'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --test tests/roadmap-audit.test.mjs

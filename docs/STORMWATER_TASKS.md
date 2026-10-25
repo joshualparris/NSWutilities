@@ -49,3 +49,38 @@
 ## Definition of completion
 
 A planning document alone can complete RTSM-001 or -002 research publications only. Any executable/scene integration task requires committed code, validation logs, regression tests and a recorded game/playtest source SHA. "All utilities complete" requires preserved compatibility with existing power/water/sewer saves and deployment. See [research](STORMWATER_RESEARCH_2026-10-25.md), [architecture](STORMWATER_ARCHITECTURE.md), [sources](STORMWATER_SOURCES.md), and [machine-readable tasks](STORMWATER_TASKS.json).
+
+## Agent execution order (dependency + priority aware)
+
+The permanent ID is **never** the same thing as execution order. Agents must respect the actual dependencies and may work on independent unclaimed tasks simultaneously. The following queue is deterministic (P0 before P1/P2 among tasks whose dependencies are already satisfied):
+
+1. **RTSM-003** — Audit 234 Repository Town roofs, roads, gutter outlets, existing pits and open drains
+2. **RTSM-004** — Select best documented NSW stormwater reference using scored town evidence matrix
+3. **RTSM-005** — Validate public council/flood GIS, datum, privacy and redistribution licence
+4. **RTSM-006** — Create synthetic terrain elevation / invert / overland direction model
+5. **RTSM-007** — Build observed rainfall and design IFD/ARR dataset provenance matrix
+6. **RTSM-008** — Implement rainfall ingestion with UTC time, DST, mm vs mm/h and missing-value tests
+7. **RTSM-009** — Derive roof/road/lot catchments, areas and impervious fractions per site
+8. **RTSM-010** — Generate deterministic synthetic storm graph (pits, gutters, pipes, culverts, outfalls)
+9. **RTSM-011** — Implement runoff / infiltration / evap / depression-storage volume ledger
+10. **RTSM-013** — Implement inlet, pipe/culvert capacity, detention and bypass into surface
+11. **RTSM-015** — Build offline SWMM reference fixtures and numerical comparison
+12. **RTSM-019** — Implement surface ponding and flood proxy with mapped building/road consequences
+13. **RTSM-020** — Bridge only explicit sanitary infiltration/inflow defects to RTSW sewer engine
+14. **RTSM-028** — Version saved stormwater state and deterministic multi-event replay
+15. **RTSM-012** — Implement rainwater roof tanks and legal site capture / overflow paths
+16. **RTSM-014** — Model receiving water and high-tailwater drainage restriction
+17. **RTSM-016** — Implement green infrastructure: swales, raingardens, infiltration and retention
+18. **RTSM-017** — Implement gross pollutant traps, build-up/capture and service removal
+19. **RTSM-018** — Implement retarding basin, release gate and overflow spill routing
+20. **RTSM-021** — Bridge separately authorised stormwater harvesting to NSW-WAT water service
+21. **RTSM-022** — Wire powered stormwater pumps and sensors to actual electrical circuits
+22. **RTSM-023** — Render matched 3D street gutters, inlets, drains, headwalls and basins
+23. **RTSM-024** — Add Stormwater/Surface overlay, property inspector and fault explanations
+24. **RTSM-029** — Full CI, mobile/game playtest and verified public deployment
+25. **RTSM-025** — Connect roof/yard/footpath/shop flooding, pumps and NPC building consequences
+26. **RTSM-026** — Model route disruption, road/rail crossing closures and recovery logic
+27. **RTSM-027** — Add maintenance crews, blocked drains, pit cleanouts, parts, costs and alarms
+28. **RTSM-030** — Publish validation, limits, change log and maintain source/data freshness
+
+First currently unblocked tasks: **RTSM-003, RTSM-004, RTSM-007**. RTSM-003 is the recommended first asset inventory implementation; RTSM-004 and RTSM-007 can proceed independently. Do not check off later tasks just because a related document exists; fulfil each acceptance gate.
