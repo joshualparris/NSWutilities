@@ -1,5 +1,7 @@
 # Pub simulation and physical remediation — 26 October 2026
 
+[Final merged release and hosted acceptance evidence](PUB_SIMULATION_RELEASE_2026-10-26.md).
+
 This is a fictional, playable engineering approximation, not an approved building design or a surveyed digital twin. PUB-CODE and RTPUB formal compliance tasks remain open. Their identifiers are separate from the PUB-SIM tasks below. Existing source evidence and the formal matrix remain authoritative about unverified approvals.
 
 ## Reference cases and evidence boundaries

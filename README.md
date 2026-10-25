@@ -14,6 +14,10 @@ Additional user-selected references: **Forbes—gas; Tamworth—fixed internet/t
 
 **Status:** Source-based research committed. No completed, calibrated or deployed game electricity-grid implementation is claimed by this repository.
 
+## Verified one-building pilot
+
+[Pub simulation research and explicit limits](docs/PUB_SIMULATION_2026-10-26.md) · [Merged release, playable link and hosted desktop/phone evidence](docs/PUB_SIMULATION_RELEASE_2026-10-26.md). The game pilot is playable; full utility calibration and formal compliance remain open.
+
 ## Start here (verified files)
 
 1. [NSW-ELEC-001 — Exhaustive deep research prompt](docs/DEEP_RESEARCH_PROMPT.md)
