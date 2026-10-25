@@ -95,3 +95,5 @@ New stormwater source work: [NSW/Dubbo research](docs/STORMWATER_RESEARCH_2026-1
 ## One-building pub utilities pilot
 
 [Merged Branch: all 16 services, evidence, assumptions and RTPUB-001–008 implementation/verification queue](docs/PUB_UTILITIES_PILOT.md). [Reference-town review and supplementary candidates](docs/UTILITY_REFERENCE_SELECTION_REVIEW.md). Runtime is implemented in canonical JoshMemory/repository-town; this research publication does not claim a live deployment or a complete town utility network.
+
+**Pub pilot QA is live and browser-verified:** [Enter the pub at lunchtime](https://parris-tech-services.github.io/Repository-town-playtest/qa-tests/pub-utilities.html). [RTPUB-008.01–008.16 remaining physical-system tasks](docs/PUB_UTILITIES_NEXT_IMPLEMENTATION.md) stay open; Vercel production is quota-blocked. [Hosted acceptance passed](https://github.com/Parris-Tech-Services/Repository-town-playtest/actions/runs/40156987523).
