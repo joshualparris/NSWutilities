@@ -29,9 +29,12 @@ def make_archive(path, kind, instants):
             else:
                 lines = [
                     "C,NEMP.WORLD,DISPATCHIS,AEMO,PUBLIC",
-                    "I,DISPATCH,REGIONSUM,5,SETTLEMENTDATE,REGIONID,TOTALDEMAND,RRP",
-                    f'D,DISPATCH,REGIONSUM,5,"{stamp}",NSW1,9000,82.25',
-                    f'D,DISPATCH,REGIONSUM,5,"{stamp}",QLD1,4500,60',
+                    "I,DISPATCH,REGIONSUM,5,SETTLEMENTDATE,REGIONID,TOTALDEMAND",
+                    f'D,DISPATCH,REGIONSUM,5,"{stamp}",NSW1,9000',
+                    f'D,DISPATCH,REGIONSUM,5,"{stamp}",QLD1,4500',
+                    "I,DISPATCH,PRICE,5,SETTLEMENTDATE,REGIONID,RRP",
+                    f'D,DISPATCH,PRICE,5,"{stamp}",NSW1,82.25',
+                    f'D,DISPATCH,PRICE,5,"{stamp}",QLD1,60',
                 ]
             inner_bytes = io.BytesIO()
             with zipfile.ZipFile(inner_bytes, "w", zipfile.ZIP_DEFLATED) as nested:
