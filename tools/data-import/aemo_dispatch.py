@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """NSW-ELEC-007: reproducible AEMO five-minute DISPATCHIS + DISPATCHSCADA loader.
 
-Uses only Python stdlib. Dates in NEM files are fixed UTC+10 (NEM/AEST), *not*
-Australia/Sydney local DST time. The output does not attribute NEM generator
-fuel types, or individual generator electricity, to NSW households.
+Uses stdlib for NEMWeb and openpyxl for the official AEMO 2026 DUID-fuel
+registry. Dates are fixed UTC+10 (NEM/AEST), not Sydney DST time.
+Regional generation groups are *registered generator SCADA*, not rooftop PV
+or physically traced energy delivered to NSW homes.
 """
 from __future__ import annotations
 
@@ -24,6 +25,13 @@ from pathlib import Path
 NEM_TZ = timezone(timedelta(hours=10))
 SRC_BASE = "https://nemweb.com.au/Reports/ARCHIVE"
 DATE_FORMAT = "%Y/%m/%d %H:%M:%S"
+REGISTRATION_URL = (
+    "https://www.aemo.com.au/-/media/files/electricity/nem/participant_information/"
+    "nem-registration-and-exemption-list.xlsx"
+    "?rev=ef75714f508b47f69449a056744d924a&sc_lang=en"
+)
+FUEL_TYPES = ("coal", "gas", "diesel_oil", "hydro", "wind", "solar",
+              "battery", "biomass", "other")
 
 
 def read_zip_csv_records(zip_path):
@@ -79,7 +87,73 @@ def to_num(value, label):
         raise ValueError(f"non-numeric {label}: {value!r}") from exc
 
 
-def inspect(scada_zip, dispatch_zip, day, strict=True):
+
+def fuel_category(primary, descriptor, technology):
+    text = " ".join((primary, descriptor, technology)).lower()
+    if "battery" in text or "storage" in text:
+        return "battery"
+    if "solar" in text or "photovoltaic" in text:
+        return "solar"
+    if "wind" in text:
+        return "wind"
+    if "coal" in text and "gas" not in text:
+        return "coal"
+    if "diesel" in text or "fuel oil" in text:
+        return "diesel_oil"
+    if "gas" in text or "methane" in text:
+        return "gas"
+    if "hydro" in text or "water" in text:
+        return "hydro"
+    if "bio" in text or "bagasse" in text:
+        return "biomass"
+    return "other"
+
+
+def load_registration(path):
+    """Map official 'PU and Scheduled Loads' DUIDs to region and fuel group.
+
+    Do not infer a region or fuel from a DUID spelling. Registration is a
+    dated snapshot: cancelled/retired and recently registered units can be
+    missing, and unregistered rooftop PV is not in this list.
+    """
+    import openpyxl
+    workbook = openpyxl.load_workbook(path, read_only=True, data_only=True)
+    try:
+        sheet = workbook["PU and Scheduled Loads"]
+        it = sheet.values
+        headers = [str(x).strip().lower() if x is not None else "" for x in next(it)]
+        req = ("duid", "region", "fuel source - primary",
+               "fuel source - descriptor", "technology type - primary")
+        if any(col not in headers for col in req):
+            raise ValueError("AEMO registration workbook expected columns missing: " + repr(headers))
+        idx = {name: headers.index(name) for name in req}
+        registry = {}
+        conflicts = set()
+        for row in it:
+            name = str(row[idx["duid"]] or "").strip().upper()
+            region = str(row[idx["region"]] or "").strip().upper()
+            if not name or region not in ("NSW1","QLD1","VIC1","SA1","TAS1"):
+                continue
+            primary = str(row[idx["fuel source - primary"]] or "").strip()
+            descriptor = str(row[idx["fuel source - descriptor"]] or "").strip()
+            tech = str(row[idx["technology type - primary"]] or "").strip()
+            entry = {"region": region, "fuel": fuel_category(primary,descriptor,tech),
+                     "fuel_primary": primary, "fuel_descriptor": descriptor}
+            if name in registry and (registry[name]["region"] != entry["region"]
+                                     or registry[name]["fuel"] != entry["fuel"]):
+                conflicts.add(name)
+            else:
+                registry[name] = entry
+        for name in conflicts:
+            registry.pop(name, None)  # ambiguous DUID: better unknown than incorrect
+        if len(registry) < 100:
+            raise ValueError("suspiciously small generator registry: " + str(len(registry)))
+        return registry, sorted(conflicts)
+    finally:
+        workbook.close()
+
+def inspect(scada_zip, dispatch_zip, day, strict=True, registry=None, registration_sha256=None, registry_conflicts=()):
+    registry = registry or {}
     date = datetime.strptime(day, "%Y-%m-%d").date()
     start = datetime.combine(date, datetime.min.time(), tzinfo=NEM_TZ)
     end = start + timedelta(days=1)
@@ -87,7 +161,10 @@ def inspect(scada_zip, dispatch_zip, day, strict=True):
     scada = {}
     source_summary = {"duid_mwh": collections.defaultdict(float),
                       "duids_seen": set(), "scada_rows": 0,
-                      "duplicate_duid_times": 0, "dispatch_region_rows": 0}
+                      "duplicate_duid_times": 0, "dispatch_region_rows": 0,
+                      "registry_matched_duids": set(), "unmatched_duids": set(),
+                      "nsw_fuel_mwh": collections.defaultdict(float),
+                      "nsw_storage_charge_mwh": 0.0}
     seen_duid_times = set()
     seen_dispatch_times = set()
     duplicates = 0
@@ -111,6 +188,22 @@ def inspect(scada_zip, dispatch_zip, day, strict=True):
         slot["positive_scada_mw"] += max(mw, 0.0)
         slot["negative_scada_mw"] += min(mw, 0.0)
         slot["scada_unit_count"] += 1
+        entry = registry.get(duid)
+        if entry:
+            source_summary["registry_matched_duids"].add(duid)
+            if entry["region"] == "NSW1":
+                fuel = entry["fuel"]
+                field = "nsw_scada_" + fuel + "_mw"
+                slot[field] = slot.get(field, 0.0) + max(mw, 0.0)
+                source_summary["nsw_fuel_mwh"][fuel] += max(mw, 0.0) / 12
+                if fuel == "battery" and mw < 0:
+                    slot["nsw_scada_battery_charging_mw"] = (
+                        slot.get("nsw_scada_battery_charging_mw", 0.0) - mw)
+                    source_summary["nsw_storage_charge_mwh"] += -mw / 12
+        else:
+            source_summary["unmatched_duids"].add(duid)
+            slot["nem_scada_unmapped_positive_mw"] = (
+                slot.get("nem_scada_unmapped_positive_mw", 0.0) + max(mw, 0.0))
         source_summary["duids_seen"].add(duid)
         source_summary["duid_mwh"][duid] += mw / 12  # five-minute *approximate* MWh
         source_summary["scada_rows"] += 1
@@ -158,6 +251,8 @@ def inspect(scada_zip, dispatch_zip, day, strict=True):
         "source": "AEMO NEMWeb public archives, fixed market time UTC+10",
         "source_file_dispatch_sha256": hashlib.sha256(Path(dispatch_zip).read_bytes()).hexdigest(),
         "source_file_scada_sha256": hashlib.sha256(Path(scada_zip).read_bytes()).hexdigest(),
+        "source_file_registration_sha256": registration_sha256,
+        "registration_source_url": REGISTRATION_URL if registry else None,
         "caveat": "SCADA spans entire NEM; summed positive SCADA is not NSW generation or NSW fuel mix. Five-minute SCADA MW integrated as MWh is approximate; source-to-house attribution is invalid.",
         "dispatch_nsw_intervals": len(records),
         "scada_nem_intervals": len(scada),
@@ -170,7 +265,19 @@ def inspect(scada_zip, dispatch_zip, day, strict=True):
         "unique_scada_duids": len(source_summary["duids_seen"]),
         "scada_unit_rows": source_summary["scada_rows"],
         "time_basis": "AEST UTC+10 no DST, NEM dispatch settlement timestamp",
-        "fuel_mix_status": "NOT CLASSIFIED: official DUID-to-region-and-fuel register not yet integrated",
+        "fuel_mix_status": (
+            "PARTIAL REGISTERED NSW1 DUID FUEL MIX: excludes rooftop/unregistered generation;"
+            " unmatched DUIDs remain unassigned, not presumed NSW"
+            if registry else "NOT CLASSIFIED: official DUID-to-region-and-fuel register missing"
+        ),
+        "registration_duids": len(registry),
+        "registration_conflicts": list(registry_conflicts),
+        "matched_scada_duids": len(source_summary["registry_matched_duids"]),
+        "unmatched_scada_duids": len(source_summary["unmatched_duids"]),
+        "nsw_registered_scada_positive_mwh_by_fuel": {
+            k: round(source_summary["nsw_fuel_mwh"][k], 3) for k in FUEL_TYPES
+        },
+        "nsw_registered_battery_charging_mwh": round(source_summary["nsw_storage_charge_mwh"], 3),
         "top_duids_by_approx_mwh_nem": [
             {"duid": k, "approx_mwh": round(v, 3)}
             for k, v in sorted(source_summary["duid_mwh"].items(),
@@ -212,7 +319,10 @@ def download(url, path):
 def write_outputs(rows, report, dest):
     dest.mkdir(parents=True, exist_ok=True)
     fields = ["nem_aest", "utc", "nsw_total_demand_mw", "nsw_spot_price_aud_per_mwh",
-              "positive_scada_mw", "negative_scada_mw", "scada_unit_count"]
+              "positive_scada_mw", "negative_scada_mw", "scada_unit_count",
+              "nem_scada_unmapped_positive_mw"] + [
+              "nsw_scada_" + x + "_mw" for x in FUEL_TYPES] + [
+              "nsw_scada_battery_charging_mw"]
     with (dest / "nsw_nem_dispatch_5m.csv").open("w", newline="", encoding="utf-8") as fh:
         out = csv.DictWriter(fh, fieldnames=fields)
         out.writeheader()
@@ -227,6 +337,8 @@ def main():
     parser.add_argument("--day", default="2026-10-20")
     parser.add_argument("--scada-zip", type=Path)
     parser.add_argument("--dispatch-zip", type=Path)
+    parser.add_argument("--registration-xlsx", type=Path)
+    parser.add_argument("--without-registration", action="store_true")
     parser.add_argument("--out", type=Path, default=Path("out/aemo"))
     parser.add_argument("--allow-incomplete", action="store_true")
     args = parser.parse_args()
@@ -239,8 +351,17 @@ def main():
             ds = args.day.replace("-", "")
             download(f"{SRC_BASE}/Dispatch_SCADA/PUBLIC_DISPATCHSCADA_{ds}.zip", scada_zip)
             download(f"{SRC_BASE}/DispatchIS_Reports/PUBLIC_DISPATCHIS_{ds}.zip", dispatch_zip)
+        reg_file = args.registration_xlsx or Path(temp) / "aemo-registration.xlsx"
+        registry, conflicts, reg_sha = {}, [], None
+        if not args.without_registration:
+            if not args.registration_xlsx:
+                download(REGISTRATION_URL, reg_file)
+            registry, conflicts = load_registration(reg_file)
+            reg_sha = hashlib.sha256(Path(reg_file).read_bytes()).hexdigest()
         rows, report = inspect(scada_zip, dispatch_zip, args.day,
-                               strict=not args.allow_incomplete)
+                               strict=not args.allow_incomplete, registry=registry,
+                               registration_sha256=reg_sha,
+                               registry_conflicts=conflicts)
         write_outputs(rows, report, args.out)
         print(json.dumps({k: v for k, v in report.items()
                           if k.endswith("_intervals") and not isinstance(v, list)},
