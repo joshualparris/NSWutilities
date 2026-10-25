@@ -32,6 +32,10 @@
 | 24 | NSW-ELEC-024 | P2 | Street-by-street real asset mapping from legally accessible evidence | 003,009 | [ ] clear evidence for each validated asset; retain synthetic placeholders elsewhere |
 | 25 | NSW-ELEC-025 | P2 | Expand utility-engine pattern to gas, water and wastewater cross-dependencies | 020 | [ ] separate fluid-flow reference model and blackout effects on pumping |
 
+| 26 | NSW-ELEC-026 | **P0** | **Validate public NSW Essential Energy poles GIS layer for Menindee, coverage, rights and freshness before spatial import** | 002,003 | [ ] aggregate locality count / scope and licence documented; non-sensitive map geometry compared with roads; missing areas remain labelled synthetic |
+
+**Triage amendment, 25 October:** NSW-ELEC-026 is newly discovered P0; its identifier is appended to preserve every previous ID. Agents should execute it **immediately after NSW-ELEC-005** and *before* NSW-ELEC-009. The work queue's table order is not the total priority ordering after this amendment; use this explicit dependency note. See [GIS_ASSET_EVIDENCE.md](./GIS_ASSET_EVIDENCE.md).
+
 ## Cross-repository rules
 
 - Existing Repository Town `RTU-001–030` tasks live in [utilities masterplan PR #199](https://github.com/joshualparris/JoshMemory/pull/199) as referenced by the NSWutilities README. **Check whether that PR is merged before using that branch link as the canonical task state.**
@@ -43,4 +47,4 @@
 
 ## Next agent's immediate instruction
 
-**Start NSW-ELEC-005**: inspect Repository Town's latest default branch and utility masterplan, enumerate *all* actual buildings and municipal loads, export a stable CSV/JSON asset list with grid references and accurate world coordinates, cross-check with scene data, and post unit tests or an audit fixture. In parallel, **NSW-ELEC-006** is data-only and can be assigned independently to another agent. Do not assign implementation to agents currently working on the same RTU IDs.
+**Start NSW-ELEC-005, then NSW-ELEC-026**: inspect Repository Town's latest default branch and utility masterplan, enumerate *all* actual buildings and municipal loads, export a stable CSV/JSON asset list with grid references and accurate world coordinates, cross-check with scene data, and post unit tests or an audit fixture. In parallel, **NSW-ELEC-006** is data-only and can be assigned independently to another agent. Do not assign implementation to agents currently working on the same RTU IDs.
