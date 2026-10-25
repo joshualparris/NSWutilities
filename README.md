@@ -91,3 +91,7 @@ The existing `RTU-001–030` labels are **not replaced or renumbered**. `NSW-ELE
 
 New stormwater source work: [NSW/Dubbo research](docs/STORMWATER_RESEARCH_2026-10-25.md), [technical architecture and acceptance tests](docs/STORMWATER_ARCHITECTURE.md), [14-source register](docs/STORMWATER_SOURCES.md) and [machine-readable dependencies](docs/STORMWATER_TASKS.json). **No in-game stormwater network or flood model has been deployed**. The next dedicated roadmap candidate is **RT-SYS-005 Gas/LPG**; stormwater's next implementation task is RTSM-003. Existing reference-town decisions (Menindee, Orange, Narromine) are preserved; stormwater reference town remains unselected.
 
+
+## One-building pub utilities pilot
+
+[Merged Branch: all 16 services, evidence, assumptions and RTPUB-001–008 implementation/verification queue](docs/PUB_UTILITIES_PILOT.md). [Reference-town review and supplementary candidates](docs/UTILITY_REFERENCE_SELECTION_REVIEW.md). Runtime is implemented in canonical JoshMemory/repository-town; this research publication does not claim a live deployment or a complete town utility network.
