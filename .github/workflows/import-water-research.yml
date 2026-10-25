@@ -1,0 +1,50 @@
+name: Import NSW water research documents
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'imports/NSWutilities-water-2026-10-25.tar.bz2'
+permissions:
+  contents: write
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Extract vetted water research Markdown
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import hashlib
+          import tarfile
+          from pathlib import Path
+          path = Path("imports/NSWutilities-water-2026-10-25.tar.bz2")
+          expected = "0f7b560a44e08d610c458132ae302b0241f8ea434621d9b41608ecfad2d48bfc"
+          assert hashlib.sha256(path.read_bytes()).hexdigest() == expected, "Archive SHA256 mismatch"
+          wanted = {
+              "docs/WATER_RESEARCH_2026-10-25.md",
+              "docs/WATER_SOURCES.md",
+              "docs/WATER_TASKS.md",
+          }
+          with tarfile.open(path, "r:bz2") as archive:
+              assert set(archive.getnames()) == wanted, "Unexpected archive members"
+              for name in sorted(wanted):
+                  destination = Path(name)
+                  assert not destination.exists(), f"Refusing to overwrite {name}"
+                  member = archive.getmember(name)
+                  assert member.isfile(), f"Not a plain file: {name}"
+                  data = archive.extractfile(member).read()
+                  destination.parent.mkdir(parents=True, exist_ok=True)
+                  destination.write_bytes(data)
+          print("Imported three Markdown documents without overwriting anything")
+          PY
+      - name: Commit source documents
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/WATER_RESEARCH_2026-10-25.md docs/WATER_SOURCES.md docs/WATER_TASKS.md
+          git commit -m "docs(water): extract source-verified NSW water study"
+          git push
