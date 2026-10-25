@@ -1,5 +1,5 @@
 {
-  "caveat": "SCADA spans entire NEM; summed positive SCADA is not NSW generation or NSW fuel mix. Five-minute SCADA MW integrated as MWh is approximate; source-to-house attribution is invalid.",
+  "caveat": "NEM-wide SCADA totals are not NSW totals; separate NSW1 fuel groups use an AEMO DUID registry snapshot and exclude unmatched DUIDs and behind-the-meter rooftop solar. Five-minute SCADA MW integrated as MWh is approximate, storage charging must not count as generation, and the mix is NOT electricity physically traced to consumers.",
   "date_nem_aest": "2026-10-20",
   "dispatch_nsw_intervals": 288,
   "duplicate_duid_intervals": 0,
@@ -32,9 +32,7 @@
     "solar": 31014.575,
     "wind": 13261.407
   },
-  "registration_conflicts": [
-    "-"
-  ],
+  "registration_conflicts": [],
   "registration_duids": 573,
   "registration_source_url": "https://www.aemo.com.au/-/media/files/electricity/nem/participant_information/nem-registration-and-exemption-list.xlsx?rev=ef75714f508b47f69449a056744d924a&sc_lang=en",
   "scada_nem_intervals": 288,
