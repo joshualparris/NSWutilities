@@ -1,0 +1,48 @@
+# NSW-ELEC-001 — Deep electricity research brief
+
+**Date:** 2026-10-25 (Australia/Sydney)  
+**Repository:** https://github.com/joshualparris/NSWutilities  
+**Purpose:** Research a physically credible NSW regional-town electricity grid and produce implementable, testable Repository Town simulation specifications.  
+**Status:** Research brief completed; detailed investigation and game implementation are separate tasks.
+
+## Mission
+
+Investigate, from primary publicly accessible sources, *every material aspect* of the generation, transmission, distribution, demand, control, protection, storage, economics, outages and restoration of electrical energy in regional New South Wales. Choose and document the best-evidenced **actual small town**, then design a faithful but playable model. Ground local assets in published evidence; never conflate a district network's generating resources with equipment physically located inside the town. Where a specific feeder, pole, phase or equipment detail is not public, create a labelled synthetic version rather than pretending it is real.
+
+## Required investigation (in sequence)
+
+1. **Town selection and evidence audit:** Compare Menindee, Bawley Point/Kioloa, Cobargo/Bega, Parkes and the Broken Hill supply area, plus other towns found. Score public documents (zone maps, feeders, substation capacity, load history, DER, weather, failures, islanding, planning, switchgear, dates) by depth, recency, granularity and reusability. Broken Hill is a *regional centre*, so distinguish it from the small-town pilot.
+2. **NEM/NSW roles and dispatch:** AEMO, AEMC, AER, IPART, Transgrid, Essential Energy, Endeavour Energy, Ausgrid, generators, retailer, connection applicant, LNSP/DNSP, utility and customer. Five-minute scheduling, bids, prices, balancing, FCAS, reserve, interconnectors, constraints and dispatch curves.
+3. **Generation mix and limits:** NSW black/brown-coal imports where relevant, gas turbines/reciprocating engines, diesel emergency sets, utility PV, rooftop PV, wind, hydro and pumped hydro, BESS, biomass where applicable; output MW, energy MWh, cost, emissions, ramp, start-up, minimum stable output, fuel and weather. Treat distant hydro and coal as upstream NEM generation, never invent a local mine/plant.
+4. **Source-to-socket network:** upstream transmission and bulk supply points; published NSW 220/132/66/33/22/11 kV equipment *as appropriate for actual site*, zone transformers and buses, reclosers, feeders, voltage regulation, pole transformers, LV three-phase and single-phase, service drops, consumer mains, smart meters, switchboards, breakers and RCDs. Confirm actual voltage, conductor and service configurations locally before using them as facts.
+5. **Asset physics and topology:** three phases, neutral, SWER where applicable, impedance, voltage drop, thermal loading, branch currents, transformer winding/ratings/tap, switching state, fuses and protection coordination, losses, backfeed, earthing and hazardous downed wires. Separate actual GIS assets from game-generated models.
+6. **Pole/line physical design:** span, pole material, cross-arms, guy wires, conductor/insulator types, clearance, sag, trees, tram/train crossing, underground routing, service line attachment, substations/cabinets and night/day visual assets. Cite NSW overhead construction documentation for visuals.
+7. **Time-dependent demand:** 5–15-minute load shapes per residential/commercial/agricultural/industrial/municipal asset; weather-driven air-conditioning and heating, hot water, EVs, industrial motors, inrush, holidays/tourism and seasonality. Critically required loads: water and wastewater, clinic/hospital, communications, railway/level crossings, emergency lighting, refrigeration, pump stations, schools and streetlighting. Account for solar diversity and demand diversity.
+8. **Solar PV:** actual Australian panel/inverter examples and exact *datasheet variant*; kWp, DC/AC ratio, orientation, tilt, temperature losses, shade, clouds, seasonal irradiance, export limits, reactive power and curtailment; AS/NZS 4777.2 and distributor connection requirements, subject to licence/access verification.
+9. **Batteries and DER:** exact documented local BESS size and connection; battery chemistry, usable SOC, reserve, power/energy, losses, degradation, calendar aging, grid-forming vs grid-following, household backup circuits, virtual power plants, community microgrids, charging control and island conditions.
+10. **Normal operations and protection:** 50 Hz frequency, frequency/voltage tolerance, inertia, fault level, volt-var/volt-watt response, fuses, reclosers, automatic transfer, feeder switching, SCADA/DERMS, island detection, protection zones, load shedding and emergency generator connection. Never imply arbitrary household PV can power a dead public grid.
+11. **Failures and recovery:** storm/lightning, bushfire, flood, trees, road accident, wildlife, equipment failure, fuel failure, transformer overheating, planned outages, upstream tower failure; isolation, crew travel/safety, restoration priorities, temporary generation, curtailment, communications, customer notifications, inter-agency coordination, real-event replay. Include Broken Hill 17–31 Oct 2024 as one evidence-based scenario.
+12. **Economics and trade:** import/export, NEM costs, retail tariffs, feed-in, generator offers, storage arbitrage, ancillary services, capex/opex, age-related reliability; simplified credible player economy distinct from grid physics.
+13. **Climate/environment:** local NSW temperature, wind, cloud, irradiance, drought, water for hydro, seasonal peak loads, bushfire/fire danger, rainfall/flooding, line sag under heat/wind and PV panel heat derating.
+14. **Open-source game-code audit:** inspect actual files from Micropolis (`src/sim/s_power.c`), Simutrans (`src/simutrans/dataobj/powernet.cc`, `src/simutrans/obj/leitung2.cc`), Mindustry (`core/src/mindustry/world/blocks/power/PowerGraph.java`), and check Cytopia, The Powder Toy, OpenTTD and Citybound honestly for relevant mechanics. Compare graph propagation, network merges/splits, batteries, visuals, UI, performance and license/architecture; do not claim a game simulates real voltage physics unless proved.
+15. **Scientific-source audit:** GridLAB-D, EPRI OpenDSS/DSS-Extensions, pandapower, PyPSA, MATPOWER, OpenModelica and other credible engines. Compare unbalanced 3-phase solver, loadflow, dispatch, protection, fault events, data integration, speed, browser compatibility and licence.
+16. **Model architecture and calibration:** separate public factual dataset, synthetic game assets and runtime state. Stable IDs for pole/line/feeder/bus/transformer/service/building/meter/DER. Design world-coordinate GIS registration, radial/weakly meshed power graph, per-phase distribution, approximate DistFlow or validated solver, 5-min dispatch, sub-second event-driven switching, deterministic weather, repair queue, serialisation, seeded replay and rollback. Compare against published demand/voltage statistics with tolerance and uncertainty.
+17. **Player-facing simulation:** physically render substations, correct line hierarchy, poles, transformers, wires and rooftop PV. Switchable layer views for HV/MV/LV, transformer loading, flow direction, phase, voltage, solar, battery SOC, customer demand, outages, restoration and price; night lighting must respond to whether each service is energised.
+18. **Verification:** tests for disconnected poles, overloaded cable, fuse/recloser sequence, transformer bottleneck, solar midday reverse flow, sunset ramp, battery exhaustion, islanding, generator fuel loss, restoration reclose, streetlight dusk logic, storm town blackout, load shedding, save/load determinism and runtime FPS. Compare baseline outputs with reference feeder cases and document deviations.
+
+## Mandatory outputs
+
+- `docs/DEEP_RESEARCH_PROMPT.md` (this brief).
+- `docs/ELECTRICITY_RESEARCH_2026-10-25.md`: researched facts, town comparison and uncertainty.
+- `docs/OPEN_SOURCE_SIMULATION_AUDIT.md`: direct source-file links and implementation trade-offs.
+- `docs/SOURCES.md`: publisher, URL, source date, retrieval date, relevance, confidence and rights notes.
+- `docs/TASKS.md`: unique NSW-ELEC IDs, priorities, dependencies, concrete next action and tests; cross-reference existing RTU-001–030 rather than renumbering.
+- Follow-up asset manifests, measured time series, deterministic scenario JSON, formal architecture and runnable tests as tasks progress.
+
+## Evidence and safety rules
+
+A published *regional schematic* is not a cadastral pole map. Clearly label observed/verified, inferred engineering approximation and invented scenario. Site-sensitive operational information, private SCADA details, cybersecurity and asset-specific vulnerabilities are out of scope unless safely and lawfully made public; do not seek restricted schematics. Explain technical limits and publicly available documents without recreating instructions for interference with critical infrastructure. Cite source pages, units and timestamp; distinguish existing/approved/proposed assets. Do not copy GPL game code into a differently licensed game without a separate legal compatibility review.
+
+## Acceptance criteria
+
+Research is complete only once: (a) primary sources cover every numbered domain, (b) the chosen town and town scale are defended by explicit evidence matrix, (c) at least three open-source games and three engineering engines are code-audited, (d) model data and assumptions are recorded, (e) feasibility/performance are tested with a sample feeder, and (f) tasks are assigned to existing non-colliding IDs. No game implementation is claimed merely by publishing this brief.
