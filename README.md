@@ -1,5 +1,15 @@
 # NSW Utilities — NSW electricity, water and utility simulation research
 
+## Current reference towns by utility
+
+| Utility | Working reference |
+|---|---|
+| Electricity | **Menindee, NSW** |
+| Sewerage and sanitary plumbing | **Narromine, NSW** |
+| Water supply | **Orange, NSW** |
+
+Gas/LPG; internet/telephone/radio/mobile; waste/recycling/bin collection; and fuel supply still need reference-town selection. These are separate service-specific cases, not one merged real-town network. See the [reference-town register](docs/REFERENCE_TOWNS.md) and [new Manus water comparison](docs/TOWN_DATA_COMPARISON_2026-10-25.md). [Original Manus PDF](imports/manus/2026-10-25/Repository_Town_selection__comparative_public_wate.pdf) and [import checksums](imports/manus/2026-10-25/manifest.json) are preserved alongside the original ZIP and Markdown attachments.
+
 **As at 25 October 2026 | Public NSW data, real grid examples, open-source game-code audit and a playable Repository Town roadmap.**
 
 **Status:** Source-based research committed. No completed, calibrated or deployed game electricity-grid implementation is claimed by this repository.
@@ -25,7 +35,7 @@ These water tasks are **proposals, not completed implementations or assigned RTU
 
 The [source archive](imports/NSWutilities-water-2026-10-25.tar.bz2) is kept for reproducibility. All three Markdown files were extracted from the user-supplied bundle without modification; their Git blob hashes match the uploaded originals.
 
-## Best small-town reference found so far
+## Electricity reference and separate regional comparators
 
 **Menindee, NSW**, within the unusually documented **Broken Hill / Far West** electrical supply area. Real publicly described regional transmission/feeder connections, AGL 50 MW/50 MWh battery, 53 MW solar plant, 200 MW wind farm, backup turbines and 2024 outage restoration chronology combine with Essential Energy zone datasets. **Bawley Point/Kioloa** is an important second case for islandable community solar/battery microgrids.
 

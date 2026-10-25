@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "asOf": "2026-10-25",
+  "selectionBasis": "User confirmed working cases, supported by scoped research; not exhaustive/certified town models",
+  "selections": [
+    {
+      "systemId": "RT-SYS-001",
+      "system": "Electricity",
+      "referenceTown": "Menindee, NSW",
+      "status": "current working reference per user",
+      "context": "Broken Hill/Far West and Bawley Point/Kioloa remain distinct comparators; regional plants and telemetry must not be relabelled as Menindee street assets."
+    },
+    {
+      "systemId": "RT-SYS-002",
+      "system": "Water supply",
+      "referenceTown": "Orange, NSW",
+      "status": "current working reference per user",
+      "context": "Manus comparative recommendation among six audited candidates. Not an exhaustive NSW ranking or verified full open network/SCADA dataset."
+    },
+    {
+      "systemId": "RT-SYS-003",
+      "system": "Sewerage and sanitary plumbing",
+      "referenceTown": "Narromine, NSW",
+      "status": "current working reference per user",
+      "context": "Provisional sewerage research reference; Uralla/Bundarra and Bermagui remain separate comparisons."
+    },
+    {
+      "systemId": "RT-SYS-005",
+      "system": "Gas/LPG",
+      "referenceTown": null,
+      "status": "not yet selected",
+      "context": "No town inferred from another utility's selection."
+    },
+    {
+      "systemId": "RT-SYS-006",
+      "system": "Fixed internet and telephone",
+      "referenceTown": null,
+      "status": "not yet selected",
+      "context": "No town inferred from another utility's selection."
+    },
+    {
+      "systemId": "RT-SYS-007",
+      "system": "Mobile communications",
+      "referenceTown": null,
+      "status": "not yet selected",
+      "context": "No town inferred from another utility's selection."
+    },
+    {
+      "systemId": "RT-SYS-016",
+      "system": "Radio/television broadcasting",
+      "referenceTown": null,
+      "status": "not yet selected",
+      "context": "No town inferred from another utility's selection."
+    },
+    {
+      "systemId": "RT-SYS-008",
+      "system": "Waste/recycling and bin collection",
+      "referenceTown": null,
+      "status": "not yet selected",
+      "context": "No town inferred from another utility's selection."
+    },
+    {
+      "systemId": "RT-SYS-009",
+      "system": "Fuel supply",
+      "referenceTown": null,
+      "status": "not yet selected",
+      "context": "No town inferred from another utility's selection."
+    }
+  ]
+}

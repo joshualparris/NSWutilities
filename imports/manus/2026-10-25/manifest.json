@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "importedOn": "2026-10-25",
+  "provider": "User-supplied Manus documents",
+  "originals": [
+    {
+      "name": "NSWutilities-water-upload.zip",
+      "path": "imports/manus/2026-10-25/NSWutilities-water-upload.zip",
+      "size": 14690,
+      "sha256": "9c214b88f186f7d9e97352c2e79cba8cfb1a63b5a6419893bfa96a77409574f7",
+      "gitBlob": "1cfc7be5bade25b5c419000847cb5e755541543e"
+    },
+    {
+      "name": "Repository_Town_selection__comparative_public_wate.md",
+      "path": "imports/manus/2026-10-25/Repository_Town_selection__comparative_public_wate.md",
+      "size": 15335,
+      "sha256": "c149540872512c311d8ef7a5bc01a74563f5b4340dae94c27d2812518ce65d85",
+      "gitBlob": "d3d86d4efcebdcbbfc07700773088f28c8d043b8"
+    },
+    {
+      "name": "Repository_Town_selection__comparative_public_wate.pdf",
+      "path": "imports/manus/2026-10-25/Repository_Town_selection__comparative_public_wate.pdf",
+      "size": 178876,
+      "sha256": "127b888abc0f5208d93ff5105bb9377aa47799ae4926e5ac57218c5eaa1ae558",
+      "gitBlob": "ea2dec9c32b9574cfc0ecaffcfa7ae228462709a"
+    },
+    {
+      "name": "Repository_Town_selection_patch_note.md",
+      "path": "imports/manus/2026-10-25/Repository_Town_selection_patch_note.md",
+      "size": 1907,
+      "sha256": "924b74deae184a3be73ba113c19c746eabcfe636d5b0769c862aa7ba337b7e86",
+      "gitBlob": "575608bf069842168f3b1bc56a388466d71b3ddc"
+    }
+  ],
+  "existingWaterDocs": [
+    {
+      "path": "docs/WATER_RESEARCH_2026-10-25.md",
+      "bytes": 25731,
+      "sha256": "e106a025daee869b4d344c3ef684cef6322eb02ac80a1e99bb7628c91ee3842b",
+      "gitBlob": "573ce7126121f2252dc3bfda2fbcba3cd9ecad74",
+      "status": "Already present on main; matching Git blob SHA; not overwritten"
+    },
+    {
+      "path": "docs/WATER_SOURCES.md",
+      "bytes": 6241,
+      "sha256": "209f10e621f74d1ea48880a332faa47ffe7ce231e731503fe4e383f586684f90",
+      "gitBlob": "02c4de695ac1fc357766397bec9b39f473fd8da1",
+      "status": "Already present on main; matching Git blob SHA; not overwritten"
+    },
+    {
+      "path": "docs/WATER_TASKS.md",
+      "bytes": 5632,
+      "sha256": "97dbafde89c0b20f5dc48426faf83b193069186c2da17ccbfb2faa997d551fb9",
+      "gitBlob": "4841a7dd991dd69243cbe72be85fddd5d2313fe5",
+      "status": "Already present on main; matching Git blob SHA; not overwritten"
+    }
+  ],
+  "canonicalCopies": [
+    {
+      "path": "docs/TOWN_DATA_COMPARISON_2026-10-25.md",
+      "original": "Repository_Town_selection__comparative_public_wate.md",
+      "transformation": "None; exact UTF-8 copy"
+    },
+    {
+      "path": "docs/TOWN_SELECTION_PATCH_NOTE_2026-10-25.md",
+      "original": "Repository_Town_selection_patch_note.md",
+      "transformation": "Replace obsolete /home/ubuntu/... comparison link with repository-relative TOWN_DATA_COMPARISON_2026-10-25.md; original preserved in import archive"
+    }
+  ],
+  "validation": [
+    "ZIP members enumerated and CRC test performed; no scripts executed",
+    "Three existing WATER_* documents match uploaded ZIP member Git blob hashes",
+    "PDF/ZIP binary Git blob hashes verified at upload",
+    "Original attachments preserved without modifying uploaded source files",
+    "Reference towns recorded by utility; all other listed systems remain unselected"
+  ]
+}

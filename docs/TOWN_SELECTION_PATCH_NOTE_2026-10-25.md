@@ -1,0 +1,9 @@
+# Repository Town selection patch note
+
+**Recommendation (25 October 2026):** Shift the single water-data base-town selection to **Orange, NSW**. Of the six audited candidates, Orange has the strongest public water-data evidence overall: town-attributed and recurrent quarterly source-operation, monthly source-extraction, and annual hydrology/groundwater/environmental reporting, alongside drinking-water quality, supply, stormwater and sewerage documentation. The basis is broader and more temporally recurrent than the other candidates, not a claim that Orange exposes complete open operational telemetry or a town utility GIS.
+
+**Menindee case:** Keep the existing Menindee electrical case as a separate electrical case/comparator; do not silently rename or combine it with Orange. If only one town can be retained and water-data evidence is the priority, replace Menindee with Orange. Menindee remains a defensible electrical-focused case, but its water evidence is uneven and corridor-level hydrology must not be mistaken for town operational data. Menindee and Broken Hill have distinct supply contexts; the corridor is not a single town.
+
+**Runner-up:** Broken Hill is the closest challenger, with recurrent town-specific drinking-water reports and wastewater compliance monitoring. It loses because Orange's audited source-operation and environmental reporting spans more categories and includes a stronger recurring monthly/quarterly reporting cadence. Both candidates lack key machine-readable network/SCADA data and have unresolved reuse terms.
+
+**Caveat:** This is a qualitative comparison of six focused audits, not an exhaustive NSW census or validated statistical ranking. Station-level coverage, exportability and dataset-specific licences remain to be checked before ingestion. See [the full comparison and rubric](TOWN_DATA_COMPARISON_2026-10-25.md).
