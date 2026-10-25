@@ -1,0 +1,22 @@
+{
+  "task": "RTU-001",
+  "status": "verified-audit-complete",
+  "scope": "source/controlled Node/Three.js electrical audit only; no new utility gameplay feature or deployment",
+  "baselineRuntime": "19a13fe0b19f9960f8dd87e5dfcefa18670a0c82",
+  "testedCandidate": "4bbda824ea510f25f131dda98cf82bc50759ed8f",
+  "mergeCommit": "b59ea0bd20b4095030477df326140221f7d09d32",
+  "pullRequest": "https://github.com/joshualparris/JoshMemory/pull/199",
+  "integration": {
+    "url": "https://github.com/joshualparris/JoshMemory/actions/runs/40152532224",
+    "result": "success",
+    "includes": "Town safety gate and five 28-day economy seeds"
+  },
+  "browser": {
+    "url": "https://github.com/joshualparris/JoshMemory/actions/runs/40152532221",
+    "result": "success",
+    "scope": "CI-built desktop and Android-sized WebGL gameplay, not hosted production or physical handset"
+  },
+  "publishedReport": "https://github.com/joshualparris/JoshMemory/blob/main/repository-town/docs/RTU_001_ELECTRICAL_AUDIT.md",
+  "nextTask": "RTU-002",
+  "broaderAssetRegistry": "NSW-ELEC-005 remains open for per-light/pump/rail asset IDs; RTU-003 is operational service registry"
+}
