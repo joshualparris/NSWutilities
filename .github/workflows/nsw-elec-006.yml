@@ -1,24 +1,18 @@
-name: NSW-ELEC-006 essential-data preflight
-
+name: NSW-ELEC public electricity data preflight
 on:
   push:
-    branches:
-      - feat/nsw-elec-006-essential-zone-load
-    paths:
-      - .github/workflows/nsw-elec-006.yml
-      - tools/nsw-elec-006/**
+    branches: [feat/nsw-elec-006-essential-zone-load]
+    paths: [.github/workflows/nsw-elec-006.yml, 'tools/data-import/**']
   workflow_dispatch:
-
 permissions:
   contents: read
-
 jobs:
   inspect:
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
-      - name: Inspect public Essential Energy 2024-25 ZIP CSV schema
+      - name: Inspect AEMO 20 Oct 2026 public zipped dispatch and generator data
         shell: bash
         run: |
           python - <<'PY'
@@ -26,23 +20,29 @@ jobs:
           from tempfile import NamedTemporaryFile
           from zipfile import ZipFile
           from io import TextIOWrapper
-          import csv, os, shutil
-          url = 'https://www.essentialenergy.com.au/ext/schools/EE-Zone-Substation-Load-Data-2024-25.zip'
-          with NamedTemporaryFile(suffix='.zip', delete=False) as f:
-              path=f.name
-              with urlopen(Request(url, headers={'User-Agent':'NSWutilities-public-research/1.0'}), timeout=90) as response:
-                  shutil.copyfileobj(response, f, 1024*1024)
-          try:
-              print('ZIP_BYTES',os.stat(path).st_size)
-              with ZipFile(path) as z:
-                  print('ZIP_MEMBERS',[(n.filename,n.file_size) for n in z.infolist()][:8])
+          import os,shutil
+          urls={
+            'DISPATCH_SCADA': 'https://nemweb.com.au/Reports/ARCHIVE/Dispatch_SCADA/PUBLIC_DISPATCHSCADA_20261020.zip',
+            'DISPATCH_IS': 'https://nemweb.com.au/Reports/ARCHIVE/DispatchIS_Reports/PUBLIC_DISPATCHIS_20261020.zip',
+          }
+          for key,url in urls.items():
+            try:
+              with NamedTemporaryFile(suffix='.zip', delete=False) as f:
+                path=f.name
+                with urlopen(Request(url,headers={'User-Agent':'Mozilla/5.0'}), timeout=90) as response:
+                  print(key,'HTTP',response.status,'LENGTH',response.headers.get('content-length'))
+                  shutil.copyfileobj(response, f)
+              try:
+                with ZipFile(path) as z:
+                  print(key,'FILES',[(x.filename,x.file_size) for x in z.infolist()][:6])
                   names=[x for x in z.namelist() if x.lower().endswith('.csv')]
-                  if not names: raise SystemExit('NO_CSV')
-                  with z.open(names[0]) as raw:
-                      f=TextIOWrapper(raw, encoding='utf-8-sig',errors='replace',newline='')
-                      lines=[next(f).strip() for _ in range(4)]
-                      for i,line in enumerate(lines):
-                          print('HEAD',i,repr(line[:400]))
-          finally:
-              os.remove(path)
+                  if names:
+                    with z.open(names[0]) as raw:
+                      stream=TextIOWrapper(raw,encoding='utf-8-sig',errors='replace')
+                      for i in range(8):
+                        print(key,'HEAD',i,repr(next(stream).strip()[:220]))
+              finally:
+                os.unlink(path)
+            except Exception as e:
+              print(key,'FETCH_ERROR',type(e).__name__,str(e))
           PY
