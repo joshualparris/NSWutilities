@@ -33,3 +33,9 @@ Electricity research remains with the user's ChatGPT electricity research sessio
 
 ## Agent entry point
 Sewerage: read SEWERAGE_RESEARCH_2026-10-25.md, SEWERAGE_SOURCES.json and SEWERAGE_TASKS.json. Next implementation task: RTSW-003 fixture inventory, then RTSW-004 water/power contracts. Electricity and water can continue independently within their existing assignments.
+
+## Dedicated roadmap coverage (25 October)
+
+[Snapshot of all 16 systems](UTILITY_ROADMAP_AUDIT_2026-10-25.md): RT-SYS-001 electricity → NSW-ELEC, RT-SYS-002 drinking water → NSW-WAT, RT-SYS-003 sewerage → RTSW, **RT-SYS-004 stormwater → [RTSM-001–030](STORMWATER_TASKS.md)**. These are *engineering work queues*, not implemented systems. Twelve systems remain without a verified full dedicated roadmap; next is **RT-SYS-005 Gas/LPG**, which retains its RTU-025–027 parents.
+
+Stormwater work has **no claimed agent ownership**. RTSM-003 (property/roof/gutter/pit inventory) is next open work. It must coordinate with the existing 234-building water audit and RTSW sewerage; property stormwater and sanitary service connections remain unknown.

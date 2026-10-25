@@ -1,0 +1,363 @@
+{
+  "schemaVersion": 1,
+  "systemId": "RT-SYS-004",
+  "prefix": "RTSM",
+  "asOf": "2026-10-25",
+  "referenceTown": "not formally selected",
+  "sourceDocument": "docs/STORMWATER_RESEARCH_2026-10-25.md",
+  "parentTasks": [
+    "RTU-022",
+    "RTU-029",
+    "RTU-030"
+  ],
+  "tasks": [
+    {
+      "id": "RTSM-001",
+      "priority": "P0",
+      "title": "Publish primary NSW stormwater source register and evidence boundary",
+      "dependsOn": [],
+      "acceptance": "Dated URLs, provenance rules, documented aggregate counts; no fabricated GIS",
+      "parent": "RTU-002",
+      "status": "research-doc-complete"
+    },
+    {
+      "id": "RTSM-002",
+      "priority": "P0",
+      "title": "Specify distinct stormwater, overland, sanitary and potable architecture",
+      "dependsOn": [
+        "RTSM-001"
+      ],
+      "acceptance": "Versioned schemas, physics limits and 22 explicit acceptance cases",
+      "parent": "RTU-004/022",
+      "status": "research-doc-complete"
+    },
+    {
+      "id": "RTSM-003",
+      "priority": "P0",
+      "title": "Audit 234 Repository Town roofs, roads, gutter outlets, existing pits and open drains",
+      "dependsOn": [
+        "RTSM-002"
+      ],
+      "acceptance": "Machine-readable per-asset ID, world position, mode and uncertainty; no silent house connection",
+      "parent": "RTU-003",
+      "status": "open"
+    },
+    {
+      "id": "RTSM-004",
+      "priority": "P0",
+      "title": "Select best documented NSW stormwater reference using scored town evidence matrix",
+      "dependsOn": [
+        "RTSM-001"
+      ],
+      "acceptance": "At least Dubbo/Orange/third town, drainage/flood reports, licences, freshness and documented limitations",
+      "parent": "RTU-002",
+      "status": "open"
+    },
+    {
+      "id": "RTSM-005",
+      "priority": "P0",
+      "title": "Validate public council/flood GIS, datum, privacy and redistribution licence",
+      "dependsOn": [
+        "RTSM-004"
+      ],
+      "acceptance": "Metadata and reuse rights per feature; unavailable geometry remains synthetic",
+      "parent": "RTU-003/022",
+      "status": "open"
+    },
+    {
+      "id": "RTSM-006",
+      "priority": "P0",
+      "title": "Create synthetic terrain elevation / invert / overland direction model",
+      "dependsOn": [
+        "RTSM-003"
+      ],
+      "acceptance": "Stable elevations and no uphill gravity edges; synthetic labels; measured inverts not invented",
+      "parent": "RTU-022",
+      "status": "open"
+    },
+    {
+      "id": "RTSM-007",
+      "priority": "P0",
+      "title": "Build observed rainfall and design IFD/ARR dataset provenance matrix",
+      "dependsOn": [
+        "RTSM-001"
+      ],
+      "acceptance": "Station/site/date/units/AEP and ARR inputs; no observed/design conflation",
+      "parent": "RTU-022",
+      "status": "open"
+    },
+    {
+      "id": "RTSM-008",
+      "priority": "P0",
+      "title": "Implement rainfall ingestion with UTC time, DST, mm vs mm/h and missing-value tests",
+      "dependsOn": [
+        "RTSM-007"
+      ],
+      "acceptance": "Repeatable versioned fixtures with event depth and interval quality report",
+      "parent": "RTU-029",
+      "status": "open"
+    },
+    {
+      "id": "RTSM-009",
+      "priority": "P0",
+      "title": "Derive roof/road/lot catchments, areas and impervious fractions per site",
+      "dependsOn": [
+        "RTSM-003",
+        "RTSM-006"
+      ],
+      "acceptance": "Reconciled areas; pervious/impervious distinction; each of 234 addressed",
+      "parent": "RTU-003/022",
+      "status": "open"
+    },
+    {
+      "id": "RTSM-010",
+      "priority": "P0",
+      "title": "Generate deterministic synthetic storm graph (pits, gutters, pipes, culverts, outfalls)",
+      "dependsOn": [
+        "RTSM-005",
+        "RTSM-006",
+        "RTSM-009"
+      ],
+      "acceptance": "All chosen nodes connected or explicit unknown; geometry overlays align with graph",
+      "parent": "RTU-022",
+      "status": "open"
+    },
+    {
+      "id": "RTSM-011",
+      "priority": "P0",
+      "title": "Implement runoff / infiltration / evap / depression-storage volume ledger",
+      "dependsOn": [
+        "RTSM-008",
+        "RTSM-009"
+      ],
+      "acceptance": "Conservation within tolerance, no double count of rainfall, all units explicit",
+      "parent": "RTU-029",
+      "status": "open"
+    },
+    {
+      "id": "RTSM-012",
+      "priority": "P1",
+      "title": "Implement rainwater roof tanks and legal site capture / overflow paths",
+      "dependsOn": [
+        "RTSM-011"
+      ],
+      "acceptance": "Finite tank volume, rainwater separate from potable/reuse approvals",
+      "parent": "RTU-019/022",
+      "status": "open"
+    },
+    {
+      "id": "RTSM-013",
+      "priority": "P0",
+      "title": "Implement inlet, pipe/culvert capacity, detention and bypass into surface",
+      "dependsOn": [
+        "RTSM-010",
+        "RTSM-011"
+      ],
+      "acceptance": "Excess water visible and conserved; shared pipe bottlenecks accounted",
+      "parent": "RTU-022",
+      "status": "open"
+    },
+    {
+      "id": "RTSM-014",
+      "priority": "P1",
+      "title": "Model receiving water and high-tailwater drainage restriction",
+      "dependsOn": [
+        "RTSM-013"
+      ],
+      "acceptance": "Blocked outfall scenario and explicit upstream ponding, no invented river sensor",
+      "parent": "RTU-022",
+      "status": "open"
+    },
+    {
+      "id": "RTSM-015",
+      "priority": "P0",
+      "title": "Build offline SWMM reference fixtures and numerical comparison",
+      "dependsOn": [
+        "RTSM-007",
+        "RTSM-013"
+      ],
+      "acceptance": "Pin solver SHA/version, run synthetic .inp, publish error/tolerance report",
+      "parent": "RTU-022/030",
+      "status": "open"
+    },
+    {
+      "id": "RTSM-016",
+      "priority": "P1",
+      "title": "Implement green infrastructure: swales, raingardens, infiltration and retention",
+      "dependsOn": [
+        "RTSM-011",
+        "RTSM-013"
+      ],
+      "acceptance": "Saturation and retention state; volume ledger reconciles",
+      "parent": "RTU-022",
+      "status": "open"
+    },
+    {
+      "id": "RTSM-017",
+      "priority": "P1",
+      "title": "Implement gross pollutant traps, build-up/capture and service removal",
+      "dependsOn": [
+        "RTSM-013"
+      ],
+      "acceptance": "Separate pollutant ledger and waste disposal maintenance task; not full water quality approval",
+      "parent": "RTU-029",
+      "status": "open"
+    },
+    {
+      "id": "RTSM-018",
+      "priority": "P1",
+      "title": "Implement retarding basin, release gate and overflow spill routing",
+      "dependsOn": [
+        "RTSM-013"
+      ],
+      "acceptance": "Finite capacity/outlet, correct downstream effect and staged recovery",
+      "parent": "RTU-022",
+      "status": "open"
+    },
+    {
+      "id": "RTSM-019",
+      "priority": "P0",
+      "title": "Implement surface ponding and flood proxy with mapped building/road consequences",
+      "dependsOn": [
+        "RTSM-006",
+        "RTSM-013"
+      ],
+      "acceptance": "Visible flood extent with modelled/uncertain depth and threshold; no safety claim",
+      "parent": "RTU-029",
+      "status": "open"
+    },
+    {
+      "id": "RTSM-020",
+      "priority": "P0",
+      "title": "Bridge only explicit sanitary infiltration/inflow defects to RTSW sewer engine",
+      "dependsOn": [
+        "RTSM-011",
+        "RTSM-019"
+      ],
+      "acceptance": "One transfer debited from storm and credited to sewer, no gutters-to-toilets plumbing",
+      "parent": "RTU-022/023",
+      "status": "open"
+    },
+    {
+      "id": "RTSM-021",
+      "priority": "P1",
+      "title": "Bridge separately authorised stormwater harvesting to NSW-WAT water service",
+      "dependsOn": [
+        "RTSM-012",
+        "RTSM-016"
+      ],
+      "acceptance": "Nonpotable and treatment/permit gating, finite water and single delivery",
+      "parent": "RTU-019/020",
+      "status": "open"
+    },
+    {
+      "id": "RTSM-022",
+      "priority": "P1",
+      "title": "Wire powered stormwater pumps and sensors to actual electrical circuits",
+      "dependsOn": [
+        "RTSM-013"
+      ],
+      "acceptance": "Blackout stops only powered equipment; gravity network still routes runoff",
+      "parent": "RTU-012/029",
+      "status": "open"
+    },
+    {
+      "id": "RTSM-023",
+      "priority": "P1",
+      "title": "Render matched 3D street gutters, inlets, drains, headwalls and basins",
+      "dependsOn": [
+        "RTSM-010",
+        "RTSM-019"
+      ],
+      "acceptance": "Every visible asset has matching network ID, collision/door access and phone checks",
+      "parent": "RTU-014",
+      "status": "open"
+    },
+    {
+      "id": "RTSM-024",
+      "priority": "P1",
+      "title": "Add Stormwater/Surface overlay, property inspector and fault explanations",
+      "dependsOn": [
+        "RTSM-013",
+        "RTSM-023"
+      ],
+      "acceptance": "Layers separate water/sewer/electricity, colourblind/mobile controls",
+      "parent": "RTU-014",
+      "status": "open"
+    },
+    {
+      "id": "RTSM-025",
+      "priority": "P1",
+      "title": "Connect roof/yard/footpath/shop flooding, pumps and NPC building consequences",
+      "dependsOn": [
+        "RTSM-019",
+        "RTSM-024"
+      ],
+      "acceptance": "Per-building paths and thresholds; no townwide magic water availability",
+      "parent": "RTU-029",
+      "status": "open"
+    },
+    {
+      "id": "RTSM-026",
+      "priority": "P1",
+      "title": "Model route disruption, road/rail crossing closures and recovery logic",
+      "dependsOn": [
+        "RTSM-019",
+        "RTSM-025"
+      ],
+      "acceptance": "Directed road closure/flood retreat, no unsupported live public warning",
+      "parent": "RTU-029",
+      "status": "open"
+    },
+    {
+      "id": "RTSM-027",
+      "priority": "P1",
+      "title": "Add maintenance crews, blocked drains, pit cleanouts, parts, costs and alarms",
+      "dependsOn": [
+        "RTSM-017",
+        "RTSM-019"
+      ],
+      "acceptance": "Finite labour/parts, condition recovery, debris disposal and auditable logs",
+      "parent": "RTU-028",
+      "status": "open"
+    },
+    {
+      "id": "RTSM-028",
+      "priority": "P0",
+      "title": "Version saved stormwater state and deterministic multi-event replay",
+      "dependsOn": [
+        "RTSM-011",
+        "RTSM-013",
+        "RTSM-020"
+      ],
+      "acceptance": "Legacy save intact, fixed seed/time, no duplicated rainfall or phantom stores",
+      "parent": "RTU-016",
+      "status": "open"
+    },
+    {
+      "id": "RTSM-029",
+      "priority": "P0",
+      "title": "Full CI, mobile/game playtest and verified public deployment",
+      "dependsOn": [
+        "RTSM-015",
+        "RTSM-020",
+        "RTSM-024",
+        "RTSM-028"
+      ],
+      "acceptance": "22 scenario cases, source SHA, Android/desktop actual hosted behaviour verified",
+      "parent": "RTU-030",
+      "status": "open"
+    },
+    {
+      "id": "RTSM-030",
+      "priority": "P2",
+      "title": "Publish validation, limits, change log and maintain source/data freshness",
+      "dependsOn": [
+        "RTSM-029"
+      ],
+      "acceptance": "Independent limits, licence status, model assumptions and unresolved unknowns linked",
+      "parent": "RTU-030",
+      "status": "open"
+    }
+  ]
+}

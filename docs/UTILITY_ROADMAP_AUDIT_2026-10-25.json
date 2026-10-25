@@ -1,0 +1,124 @@
+{
+  "schemaVersion": 1,
+  "asOf": "2026-10-25",
+  "criteria": "Dedicated numbered implementation roadmap with stable IDs, ordered dependencies, acceptance and explicit status; a system merely mentioned within RTU cross-system list is not sufficient",
+  "systemCount": 16,
+  "completeDedicatedCount": 4,
+  "notVerifiedDedicatedCount": 12,
+  "systems": [
+    {
+      "id": "RT-SYS-001",
+      "name": "Electricity",
+      "roadmapStatus": "dedicated",
+      "roadmapPath": "docs/TASKS.md",
+      "relatedWork": "NSW-ELEC-*; RTU-001–018"
+    },
+    {
+      "id": "RT-SYS-002",
+      "name": "Drinking and non-potable water",
+      "roadmapStatus": "dedicated",
+      "roadmapPath": "docs/WATER_IMPLEMENTATION_TASKS.md",
+      "relatedWork": "NSW-WAT-001–030; RTU-019–021"
+    },
+    {
+      "id": "RT-SYS-003",
+      "name": "Sewerage and sanitary plumbing",
+      "roadmapStatus": "dedicated",
+      "roadmapPath": "docs/SEWERAGE_TASKS.md",
+      "relatedWork": "RTSW-001–028; RTU-022–024"
+    },
+    {
+      "id": "RT-SYS-004",
+      "name": "Stormwater and flood drainage",
+      "roadmapStatus": "dedicated",
+      "roadmapPath": "docs/STORMWATER_TASKS.md",
+      "relatedWork": "RTSM-001–030; RTU-022 interface"
+    },
+    {
+      "id": "RT-SYS-005",
+      "name": "Gas and LPG",
+      "roadmapStatus": "parent-only",
+      "roadmapPath": null,
+      "relatedWork": "RTU-025–027 broad tasks; no dedicated gas/LPG engineering sub-queue verified"
+    },
+    {
+      "id": "RT-SYS-006",
+      "name": "Fixed internet and telephone",
+      "roadmapStatus": "scope-only",
+      "roadmapPath": null,
+      "relatedWork": "RT-SYS-006 designated, no separate implementation queue"
+    },
+    {
+      "id": "RT-SYS-007",
+      "name": "Mobile communications",
+      "roadmapStatus": "scope-only",
+      "roadmapPath": null,
+      "relatedWork": "RT-SYS-007 designated, no separate implementation queue"
+    },
+    {
+      "id": "RT-SYS-008",
+      "name": "Solid waste, recycling and organics",
+      "roadmapStatus": "prototype-parent",
+      "roadmapPath": null,
+      "relatedWork": "RTU-029 cross-system and existing waste simulation, no dedicated queue verified"
+    },
+    {
+      "id": "RT-SYS-009",
+      "name": "Fuel supply and logistics",
+      "roadmapStatus": "prototype-parent",
+      "roadmapPath": null,
+      "relatedWork": "RTU-005/010/013/029 power/fuel interfaces, no dedicated queue verified"
+    },
+    {
+      "id": "RT-SYS-010",
+      "name": "Roads, rail and public transport",
+      "roadmapStatus": "prototype-parent",
+      "roadmapPath": null,
+      "relatedWork": "Existing road/rail work, no dedicated complete system-specific queue verified"
+    },
+    {
+      "id": "RT-SYS-011",
+      "name": "Public lighting and traffic controls",
+      "roadmapStatus": "existing-numbered-partial",
+      "roadmapPath": null,
+      "relatedWork": "Existing RLT lighting and RTU-011–015 tasks; verify depth/coverage before considering full plan"
+    },
+    {
+      "id": "RT-SYS-012",
+      "name": "Emergency services and warning systems",
+      "roadmapStatus": "prototype-parent",
+      "roadmapPath": null,
+      "relatedWork": "Existing emergency modules, no dedicated system-specific queue verified"
+    },
+    {
+      "id": "RT-SYS-013",
+      "name": "Health, education and civic facilities",
+      "roadmapStatus": "prototype-parent",
+      "roadmapPath": null,
+      "relatedWork": "Existing civic facilities, no single dedicated utility-continuity roadmap verified"
+    },
+    {
+      "id": "RT-SYS-014",
+      "name": "Heating, cooling and thermal services",
+      "roadmapStatus": "prototype-parent",
+      "roadmapPath": null,
+      "relatedWork": "RTU-006/012 household thermal interfaces; no dedicated HVAC roadmap"
+    },
+    {
+      "id": "RT-SYS-015",
+      "name": "Post and parcel delivery",
+      "roadmapStatus": "prototype-parent",
+      "roadmapPath": null,
+      "relatedWork": "Existing post/depot simulation, no dedicated system-specific roadmap"
+    },
+    {
+      "id": "RT-SYS-016",
+      "name": "Broadcasting and public information",
+      "roadmapStatus": "scope-only",
+      "roadmapPath": null,
+      "relatedWork": "RT-SYS-016 designation; no dedicated broadcasting implementation queue"
+    }
+  ],
+  "nextRecommendedSystem": "RT-SYS-005",
+  "nextRecommendedAction": "Create dedicated Gas/LPG research, exact source/equipment applicability, NSW evidence, implementation tasks and cross-reference RTU-025–027."
+}

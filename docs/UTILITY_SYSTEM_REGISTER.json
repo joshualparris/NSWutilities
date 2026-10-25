@@ -35,7 +35,9 @@
       "owner": "Unassigned",
       "scope": "Roof downpipes, street pits, culverts, detention and receiving waters; separate sanitary network",
       "existingWork": "RTU-022 interface; dedicated implementation unassigned",
-      "status": "Unimplemented network"
+      "status": "Dedicated numbered engineering/research roadmap published; network not implemented; no implementing agent assigned",
+      "taskQueue": "RTSM-001–030",
+      "taskQueuePath": "docs/STORMWATER_TASKS.md"
     },
     {
       "id": "RT-SYS-005",

@@ -84,3 +84,10 @@ The existing `RTU-001–030` labels are **not replaced or renumbered**. `NSW-ELE
 - [NSW-ELEC-003 official regional voltages, actual Menindee 66/22 kV substation, outages and **unknown** last-mile circuits](docs/NSW_ELEC_003_VERIFIED_TOPOLOGY.md) with [20 regional asset nodes / 13 schematic source-labelled links](data/menindee_regional_reference_2025.json).
 - [NSW-ELEC-004 six-game/engine source and licensing audit](docs/NSW_ELEC_004_SOLVER_CODE_AND_LICENSE.md), plus [executable pandapower/PyPSA physics comparison](tools/solver_benchmarks/compare_ac.py) and [CI reference suite](.github/workflows/nsw-elec-004.yml).
 - **Boundaries:** exact Menindee individual service drops, poles, phases and transformer ratings are NOT publicly verified and must be labelled synthetic. Benchmark results are from a wholly synthetic 11 kV toy feeder, never the actual Menindee circuit. No Repository Town game deployment is claimed.
+
+## Dedicated utilities implementation roadmap audit (25 October)
+
+[16-system roadmap audit](docs/UTILITY_ROADMAP_AUDIT_2026-10-25.md) establishes which utility categories have **fully numbered implementation queues** versus only broader RTU tasks. Four now have dedicated queues: [electricity](docs/TASKS.md), [drinking water](docs/WATER_IMPLEMENTATION_TASKS.md), [sewerage](docs/SEWERAGE_TASKS.md), and newly [stormwater/flood drainage RTSM-001–030](docs/STORMWATER_TASKS.md). Twelve other RT-SYS systems remain short of complete dedicated plans (even where narrower tasks exist).
+
+New stormwater source work: [NSW/Dubbo research](docs/STORMWATER_RESEARCH_2026-10-25.md), [technical architecture and acceptance tests](docs/STORMWATER_ARCHITECTURE.md), [14-source register](docs/STORMWATER_SOURCES.md) and [machine-readable dependencies](docs/STORMWATER_TASKS.json). **No in-game stormwater network or flood model has been deployed**. The next dedicated roadmap candidate is **RT-SYS-005 Gas/LPG**; stormwater's next implementation task is RTSM-003. Existing reference-town decisions (Menindee, Orange, Narromine) are preserved; stormwater reference town remains unselected.
+
