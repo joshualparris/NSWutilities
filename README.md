@@ -29,6 +29,21 @@ Gas/LPG; internet/telephone/radio/mobile; waste/recycling/bin collection; and fu
 
 ## NSW water supply, wastewater and modelling research
 
+### Water and wastewater — 2026 standards upgrade (verified)
+
+- [Source-based parity audit and current implementation gaps](docs/WATER_PARITY_AUDIT_2026-10-25.md)
+- [Exhaustive drinking-water/plumbing/sewer research brief](docs/WATER_DEEP_RESEARCH_PROMPT.md)
+- [Detailed water treatment, storage, demand, sewer and stormwater engineering architecture](docs/WATER_SIMULATION_ARCHITECTURE.md)
+- [Dubbo references, dataset/provenance controls](docs/WATER_DATA_AND_EVIDENCE.md)
+- [Actual EPANET / WNTR / SWMM open solver sources and model limits](docs/WATER_OPEN_SOURCE_AUDIT.md)
+- [Stable numbered water task queue NSW-WAT-001–030](docs/WATER_IMPLEMENTATION_TASKS.md), retaining the [original 13 proposed tasks](docs/WATER_TASKS.md)
+- [234-location per-service unknown/connection audit](audit/water/building-service-inventory.json)
+- [Deterministic water volume/pipe reachability reference core](src/water/water-core.mjs), [tests](tests/water-core.test.mjs), [passing CI (25 Oct)](https://github.com/joshualparris/NSWutilities/actions/runs/40154387862)
+- [Repository Town water/sewer baseline](https://github.com/joshualparris/JoshMemory/blob/main/repository-town/docs/RTU_019_024_WATER_SEWER_BASELINE_2026-10-25.md) and [gameplay specification](https://github.com/joshualparris/JoshMemory/blob/main/repository-town/docs/WATER_AND_WASTEWATER_GAMEPLAY_SPEC.md)
+
+**Document and reference-test parity improved; game runtime parity remains open.** The fast reference solver is volume-conserving and not a pressure or drinking-water safety simulator. Potable/nominal water service work is RT-SYS-002 and the dedicated sewerage task programme **RTSW-001–028** governs RT-SYS-003 runtime implementation. [Sewer research](docs/SEWERAGE_RESEARCH_2026-10-25.md) uses Narromine as the focused operational sewer comparator; Dubbo remains a separate combined utility/water example. Retain RTSW and all RTU identifiers; do not assign two teams the same sewer code work.
+
+
 The [NSW water research synthesis](docs/WATER_RESEARCH_2026-10-25.md) describes catchments, storage and allocations, treatment, water quality, distribution, wastewater and reuse, regional-town examples, data limitations and practical modelling evidence. See the companion [source register](docs/WATER_SOURCES.md) and [13 proposed validation/modelling tasks](docs/WATER_TASKS.md).
 
 These water tasks are **proposals, not completed implementations or assigned RTU work**. Published evidence does not establish a full street-level pipe/sewer network or a calibrated engineering simulator. Keep existing `NSW-ELEC-*` and `RTU-*` task identifiers unchanged; confirm cross-repository ownership before implementation.

@@ -27,3 +27,7 @@
 12. **Proposed — Add safety and operational-use review.** Have qualified water and public-health practitioners review any proposed potable-water, water-quality, environmental-flow, asset-condition or operational conclusions. Explicitly prohibit use of unvalidated repository models for operational decisions, safety certification or reuse authorization.
 
 13. **Proposed — Maintain update and change log.** Assign owners and review intervals for dynamic dashboards, utility reports, project statuses, licences and dataset versions. On each update retain prior values, access date, source evidence and explanation of changed definitions rather than silently overwriting historical observations.
+
+## Permanent engineering execution queue
+
+The 13 original proposed tasks above are preserved. For implementation triage, use [NSW-WAT-001–030](WATER_IMPLEMENTATION_TASKS.md), mapped to existing `RTU-*` parents and the independent [RTSW sewer tasks](SEWERAGE_TASKS.md) where appropriate. Do not treat these original unnumbered proposals as additional implementation work or duplicate the sewer module.

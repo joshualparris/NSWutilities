@@ -128,3 +128,7 @@ The **Dubbo advanced wastewater plant** was announced completed 8 Sep 2026; up t
 ## 8. Integration path
 
 Crosswalk to Repository Town's pre-existing `RTU-019…024` and `RTU-029…030` in [the masterplan](https://github.com/joshualparris/JoshMemory/blob/main/repository-town/docs/UTILITIES_MASTERPLAN_2026-10-25.md), preserving all RTU IDs. `src/water/water-core.mjs` and tests here are a deterministic **model feasibility/reference module** only, not wired into Repository Town gameplay. An adapter must translate existing **unitless** gameplay stocks into new versioned per-property L/h state, with explicit one-time migration assumption, never change old saves silently. Only claim complete after integrated tests and verified live release.
+
+## 9. Canonical sewer task owner and interface reconciliation
+
+[RTSW sewer specification](SEWERAGE_RESEARCH_2026-10-25.md) with [RTSW-001–028](SEWERAGE_TASKS.md) is the **authoritative detailed sewerage implementation queue** for Repository Town. The present document is a potable-to-sewer interface and volume-reference model, not a rival sewer worklist. On integration, publish only property metered *fixture deliveries* and cistern storage transactions from water; RTSW receives actual deferred *flush/discharge events*, not a second 80% auto-transfer. `water-core.mjs` is a synthetic single-catchment fixture and its sanitary aggregate MUST be replaced or disabled, not run beside the gameplay sewer solver. Narromine and Dubbo reference case data must not be mixed as if one documented network.

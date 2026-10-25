@@ -36,3 +36,9 @@
 | 30 | NSW-WAT-030 | P2 | Document ongoing changes, owners and review dates | Proposal 13 | [ ] as-of date + regression and source-change log |
 
 **Next unblocked engineering work:** NSW-WAT-012 (individual decisions) in parallel with NSW-WAT-010 (water data) and NSW-WAT-011 (open geometry/terrain). No agent should mark water 'implemented' from docs or the standalone surrogate alone. Temporary test models must carry synthetic flags. All data-provenance and public-health limitations in [architecture](WATER_SIMULATION_ARCHITECTURE.md) remain mandatory.
+
+## Coordination with RTSW and Manus (25 October update)
+
+A separate concurrent sewerage research programme has **RTSW-001–028** under RT-SYS-003 and RTU-022–024: [sewer research](SEWERAGE_RESEARCH_2026-10-25.md), [sewer implementation queue](SEWERAGE_TASKS.md), [system register](UTILITY_SYSTEM_REGISTER.md). It provisionally uses **Narromine** for measured wastewater/operating details, complementing the **Dubbo drinking-water and combined-utility** analogy here. The user's earlier assignment gives drinking water to Manus and sewer research to a separate ChatGPT research strand; do not claim that these teams' work has been deployed.
+
+**Ownership rule:** NSW-WAT-019 through -022 and -026 through -029 are **interface/reference requirements** for water-to-sewer coupling. Implementation of sanitary pipes, toilets, wastewater pumps, treatment and sewer release is owned by **RTSW-003–028 / RTU-022–024** (after checking COORDINATION). NSW-WAT remains the dated water-data/evidence, potable supply, cross-network contract and validation work; mark its sewer-related requirements satisfied *by linked RTSW evidence* instead of writing duplicate gameplay code. Water model's `sewageGeneratedL` is a **synthetic catchment aggregate only** and cannot replace the RTSW per-fixture sewer ledger.

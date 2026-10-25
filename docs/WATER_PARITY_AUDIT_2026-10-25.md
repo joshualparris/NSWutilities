@@ -35,3 +35,7 @@ References:
 ## Explicit definition of parity
 
 **Document/engineering-specification parity** requires: sourced geography, algorithms/units, system diagram, distinct wastewater/stormwater, code audits, 12+ acceptance scenarios, stable tasks and sources, asset inventory and honest limitations. **Runtime parity** requires property-level service graph, pipe/valve/pressure approximation, sewage gravity/overflow/pumps, coherent water/electricity coupling, acceptance suite and verified deployed gameplay. This commit can advance the former but must not be called the latter.
+
+## Cross-agent sewerage discovery, 25 October
+
+Another research strand has published [detailed Narromine-centred sewerage research](SEWERAGE_RESEARCH_2026-10-25.md) and [RTSW-001–028](SEWERAGE_TASKS.md). These provide valuable extra sanitary plumbing, gravity sewer and treatment depth and are **not superseded** by this broader water research. Thus Dubbo is the primary **drinking-water/whole-utility** documentary anchor; Narromine the provisional **sanitary-system engineering** reference. Do not merge them into a fake single real-town asset map. Treat sewer-specific NSW-WAT targets as evidence/interface obligations linked to RTSW IDs, never second competing implementation streams.
