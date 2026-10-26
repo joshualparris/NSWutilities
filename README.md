@@ -14,6 +14,10 @@ Additional user-selected references: **Forbes—gas; Tamworth—fixed internet/t
 
 **Status:** Source-based research committed. No completed, calibrated or deployed game electricity-grid implementation is claimed by this repository.
 
+## Cellar and upstairs pub expansion
+
+[Design, primary sources and model limits](docs/PUB_CELLAR_UPSTAIRS_2026-10-26.md) · [Merged release and hosted desktop/phone acceptance](docs/PUB_CELLAR_UPSTAIRS_RELEASE_2026-10-26.md). Two above-ground storeys and a cellar: 19 ground seats, 32 upstairs, office, keg/wine storage, lift, stairs and cellar services. Formal approvals and full utility calibration remain open.
+
 ## Verified one-building pilot
 
 [Pub simulation research and explicit limits](docs/PUB_SIMULATION_2026-10-26.md) · [Merged release, playable link and hosted desktop/phone evidence](docs/PUB_SIMULATION_RELEASE_2026-10-26.md). The game pilot is playable; full utility calibration and formal compliance remain open.

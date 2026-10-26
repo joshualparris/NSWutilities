@@ -46,4 +46,4 @@ Reviewed 26 October 2026. Documents are linked, not reproduced; publisher copyri
 | PUB-EXP-005 | Standards/audit/reference reconciliation | 001–004 | Replace outdated single-storey assertions; retain all legal hold points; update source blob evidence |
 | PUB-EXP-006 | Review, merge, hosted desktop/phone acceptance | 001–005 | Full release/privacy, source checks, real 3D stair/lift/cellar/seat/fault/exit gameplay, exact public manifest, header absent from outset |
 
-All tasks remain pending final release evidence until the acceptance report records the tested source, workflow results, public URL and limitations. Human handset, acoustics/listening, full crowd and professional engineering verification remain separate.
+PUB-EXP-001–006 are complete within the declared playable-model scope. The [release acceptance report](PUB_CELLAR_UPSTAIRS_RELEASE_2026-10-26.md) records exact tested source, all seven source checks, publisher, actual hosted desktop/phone tests, URL and limitations. Human handset, acoustics/listening, full crowd and professional engineering verification remain separate.
